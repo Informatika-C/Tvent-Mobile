@@ -18,10 +18,15 @@ class MainView extends GetView<MainController> {
 
 Obx createPageView(MainController controller) {
     return Obx(() =>
-      PageView(
+      PageView.builder(
+        clipBehavior: Clip.none,
         controller: controller.pageController.value,
         onPageChanged: controller.onPageChanged,
-        children: controller.widgetOption,
+        itemCount: controller.widgetOption.length,
+        itemBuilder: (context, index) {
+          final item = controller.widgetOption[index];
+          return item();
+        },
       ),
     );
   }

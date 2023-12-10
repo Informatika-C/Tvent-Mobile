@@ -5,7 +5,11 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  HomeView({super.key});
+
+  @override
+  final controller = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
