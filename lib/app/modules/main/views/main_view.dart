@@ -5,20 +5,40 @@ import 'package:get/get.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
-  const MainView({Key? key}) : super(key: key);
+  const MainView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('MainView'),
-        centerTitle: true,
+      // body: Obx(() => controller.widgetOption.elementAt(controller.selctedIndex.value)),
+      body: createPageView(controller),
+      bottomNavigationBar: createBottombar(controller),
+    );
+  }
+}
+
+Obx createPageView(MainController controller) {
+    return Obx(() =>
+      PageView(
+        controller: controller.pageController.value,
+        onPageChanged: controller.onItemTapped,
+        children: controller.widgetOption,
       ),
-      body: const Center(
-        child: Text(
-          'MainView is working',
-          style: TextStyle(fontSize: 20),
+    );
+  }
+
+Obx createBottombar(MainController controller) {
+    return Obx(() =>
+      ClipRRect(
+        borderRadius: controller.borderRadius,
+        child: BottomNavigationBar(
+          backgroundColor: controller.backgroundColor,
+          items: controller.navBar,
+          iconSize: controller.iconSize,
+          selectedItemColor: controller.selectedItemColor,
+          unselectedItemColor: controller.unselectedItemColor,
+          currentIndex: controller.selctedIndex.value,
+          onTap: controller.onItemTapped,
         ),
       ),
     );
   }
-}
