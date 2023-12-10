@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:tvent/app/modules/event/views/event_view.dart';
 import 'package:tvent/app/modules/home/views/home_view.dart';
 import 'package:tvent/app/modules/profile/views/profile_view.dart';
@@ -6,10 +7,10 @@ import 'package:tvent/app/modules/profile/views/profile_view.dart';
 class NavPages {
   NavPages._();
 
-  static final route = <Widget>[
-    const HomeView(),
-    const EventView(),
-    const ProfileView(),
+  static final route = <Function()>[
+    () => HomeView(),
+    () => EventView(),
+    () => ProfileView(),
   ];
 
   static final navBar = <BottomNavigationBarItem>[
