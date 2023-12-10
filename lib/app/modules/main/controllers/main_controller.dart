@@ -23,6 +23,10 @@ class MainController extends GetxController {
     selctedIndex.value = index;
   }
 
+  void onPageChanged(int index){
+    selctedIndex.value = index;
+  }
+
   @override
   void onInit() {
     super.onInit();

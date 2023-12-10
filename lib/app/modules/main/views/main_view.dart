@@ -20,7 +20,7 @@ Obx createPageView(MainController controller) {
     return Obx(() =>
       PageView(
         controller: controller.pageController.value,
-        onPageChanged: controller.onItemTapped,
+        onPageChanged: controller.onPageChanged,
         children: controller.widgetOption,
       ),
     );
