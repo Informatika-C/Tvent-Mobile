@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
+import '../modules/about/bindings/about_binding.dart';
+import '../modules/about/views/about_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/event/views/event_view.dart';
@@ -19,13 +22,18 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.AUTH,
-      page: () => const AuthView(),
+      page: () => AuthView(),
       binding: AuthBinding(),
     ),
     GetPage(
       name: _Paths.MAIN,
-      page: () => const MainView(),
+      page: () => MainView(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABOUT,
+      page: () => const AboutView(),
+      binding: AboutBinding(),
     ),
   ];
 }

@@ -13,10 +13,7 @@ class EventView extends GetView<EventController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('EventView'),
-        centerTitle: true,
-      ),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: const Center(
         child: Text(
           'EventView is working',
