@@ -1,8 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:tvent/app/modules/home/controllers/home_controller.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+class HomeView extends GetView<HomeController> {
+  HomeView({super.key});
+  
+  @override
+  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {

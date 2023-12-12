@@ -10,11 +10,11 @@ import 'package:tvent/app/modules/profile/views/profile_view.dart';
 class NavPages {
   NavPages._();
 
-  static final route = <Widget>[
-    const HomeView(),
-    const EventView(),
-    const AboutView(),
-    const ProfileView(),
+  static final route = [
+    () => HomeView(),
+    () => EventView(),
+    () => AboutView(),
+    () => ProfileView(),
   ];
 
   static final navBar = [
