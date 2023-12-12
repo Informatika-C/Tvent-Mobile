@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/event_controller.dart';
+import '../controllers/about_controller.dart';
 
-class EventView extends GetView<EventController> {
-  EventView({super.key});
+class AboutView extends GetView<AboutController> {
+  AboutView({super.key});
 
   @override
-  final controller = Get.put(EventController());
+  final controller = Get.put(AboutController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: const Center(
         child: Text(
-          'EventView is working',
+          'AboutView is working',
           style: TextStyle(fontSize: 20),
         ),
       ),

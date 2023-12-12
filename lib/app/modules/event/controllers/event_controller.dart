@@ -7,6 +7,7 @@ class EventController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+        print('Event Init');
   }
 
   @override

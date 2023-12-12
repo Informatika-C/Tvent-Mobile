@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
-  //TODO: Implement HomeController
+class AboutController extends GetxController {
+  //TODO: Implement AboutController
 
   final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
-    print('Home Init');
+        print('About Init');
   }
 
   @override

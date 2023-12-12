@@ -14,16 +14,13 @@ class MainController extends GetxController {
     topLeft: Radius.circular(24),
   );
   final iconSize = 40.0;
-  final backgroundColor = Colors.white;
-  final selectedItemColor = Colors.yellow[800];
-  final unselectedItemColor = Colors.grey[800];
 
   void onItemTapped(int index) {
     pageController.value.jumpToPage(index);
     selctedIndex.value = index;
   }
 
-  void onPageChanged(int index){
+  void onPageChanged(int index) {
     selctedIndex.value = index;
   }
 
