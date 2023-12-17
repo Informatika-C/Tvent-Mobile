@@ -13,7 +13,8 @@ class Themes {
       scrim: Color(0XFFFFA500),
       secondary: Color(0XFF06142E),
       surface: Colors.white,
-      inverseSurface: Color(0XFF262A32),
+      inverseSurface: Color.fromARGB(255, 99, 83, 83),
+      surfaceVariant: Color(0XFFbd83b8),
     ),
     brightness: Brightness.light,
   );
@@ -27,9 +28,10 @@ class Themes {
       primary: Color(0xfff2f2f2),
       tertiary: Color(0XFF262A32),
       scrim: Colors.white,
-      secondary: Color(0XFF574D45),
+      secondary: Color(0xFFFF8C00),
       surface: Color(0XFF262A32),
-      inverseSurface: Colors.white,
+      inverseSurface: Color.fromARGB(255, 212, 214, 215),
+      surfaceVariant: Color(0XFFf1916d),
     ),
     brightness: Brightness.dark,
   );
