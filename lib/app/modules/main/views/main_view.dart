@@ -1,12 +1,8 @@
 import 'dart:ui';
-
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-
 import 'package:get/get.dart';
 import 'package:tvent/app/widget/drawer.dart';
-
 import '../../../routes/app_nav.dart';
 import '../controllers/main_controller.dart';
 
@@ -74,9 +70,14 @@ Obx createBottombar(MainController controller, BuildContext context) {
     () => ClipRRect(
       borderRadius: controller.borderRadius,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 2),
+        padding: const EdgeInsets.only(bottom: 1.2),
         child: CrystalNavigationBar(
-          backgroundColor: Colors.black.withOpacity(0.1),
+          backgroundColor: const Color(0xfff2f2f2).withOpacity(0.3),
+          splashBorderRadius: 18,
+          borderRadius: 26,
+          paddingR: const EdgeInsets.all(2),
+          outlineBorderColor: const Color(0xfff2f2f2),
+          // outlineBorderColor: Theme.of(context).colorScheme.primary,
           currentIndex: controller.selctedIndex.value,
           onTap: controller.onItemTapped,
           items: NavPages.navBar,
