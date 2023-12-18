@@ -6,24 +6,41 @@ import 'package:tvent/app/routes/app_pages.dart';
 class AuthController extends GetxController {
   final dio = Dio();
 
-  void login(email, password) async {
+  RxBool isLoading = false.obs;
+
+  Future<bool> login(String email, String password) async {
     try {
+      isLoading.value = true;
+
       final response = await dio.post(
         'https://tvent.azurewebsites.net/api/login',
         data: {'email': email, 'password': password},
       );
+
+      isLoading.value = false;
+
       Get.offAllNamed(Routes.MAIN);
+      return true;
     } catch (error) {
+      isLoading.value = false;
+
       Get.defaultDialog(
         title: "Login Failed",
-        middleText: "invalid email or password",
-        confirm: TextButton(onPressed: () => Get.back(), child: Text("OK")),
+        middleText: "Invalid email or password",
+        confirm: TextButton(
+          onPressed: () => Get.back(),
+          child: const Text("OK"),
+        ),
       );
+      return false;
     }
   }
 
-  void register(name, email, npm, phone, password) async {
+  Future<void> register(String name, String email, String npm, String phone,
+      String password) async {
     try {
+      isLoading.value = true;
+
       final response = await dio.post(
         'https://tvent.azurewebsites.net/api/register',
         data: {
@@ -32,9 +49,12 @@ class AuthController extends GetxController {
           'phone': phone,
           'email': email,
           'password': password,
-          'password_confirmation': password
+          'password_confirmation': password,
         },
       );
+
+      isLoading.value = false;
+
       Get.defaultDialog(
         title: "Registration Success",
         middleText: "Please login to continue",
@@ -46,7 +66,20 @@ class AuthController extends GetxController {
         ),
       );
     } catch (error) {
-      print('An error occurred: ${error}');
+      isLoading.value = false;
+
+      Get.defaultDialog(
+        title: "Registration Failed",
+        middleText: "An error occurred during registration",
+        confirm: TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text("OK"),
+        ),
+      );
+
+      print('An error occurred during registration: $error');
     }
   }
 

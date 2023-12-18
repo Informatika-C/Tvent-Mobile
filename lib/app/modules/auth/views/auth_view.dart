@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
-import 'package:tvent/app/routes/app_pages.dart';
 import 'package:tvent/services/theme.dart';
-
 import '../controllers/auth_controller.dart';
 
 class AuthView extends GetView<AuthController> {
   AuthView({Key? key}) : super(key: key);
-  final Name = TextEditingController(),
-      Email = TextEditingController(),
-      Npm = TextEditingController(),
-      Phone = TextEditingController(),
-      PassConfirm = TextEditingController(),
-      Pass = TextEditingController();
+
+  final Name = TextEditingController();
+  final Email = TextEditingController();
+  final Npm = TextEditingController();
+  final Phone = TextEditingController();
+  final PassConfirm = TextEditingController();
+  final Pass = TextEditingController();
 
   RxMap<String, String> hasFieldError = <String, String>{}.obs;
-
-  RxBool rememberMe = false.obs,
-      hidePass = true.obs,
-      hidePassConfirm = true.obs,
-      isLogin = true.obs;
+  RxBool rememberMe = false.obs;
+  RxBool hidePass = true.obs;
+  RxBool hidePassConfirm = true.obs;
+  RxBool isLogin = true.obs;
 
   void clearTextController() {
     Name.clear();
-    // Email.clear();
+    Email.clear();
     Npm.clear();
     Phone.clear();
     Pass.clear();
@@ -35,11 +32,14 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     Widget Login = Container(
-      width: MediaQuery.of(context).size.width - 50,
-      height: MediaQuery.of(context).size.height * 0.6,
+      padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 2.0),
+      width: double.infinity,
       decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("images/polygons.png"), fit: BoxFit.cover),
+        image: const DecorationImage(
+          image: AssetImage("assets/images/polygons.png"),
+          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
+        ),
         borderRadius: BorderRadius.circular(30),
         color: Colors.white,
         boxShadow: [
@@ -47,35 +47,38 @@ class AuthView extends GetView<AuthController> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 0,
             blurRadius: 3,
-            offset: Offset(5, 5),
+            offset: const Offset(5, 5),
           ),
         ],
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  "LOGIN",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  color: Colors.black,
-                  child: Text("HI, WELCOME BACK",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold)),
-                ),
-              ],
+          const Text(
+            "Login",
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 50.0, bottom: 30.0),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: const Text(
+              "HI, WELCOME BACK",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13.7,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(20),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Obx(
                   () => TextField(
@@ -84,60 +87,83 @@ class AuthView extends GetView<AuthController> {
                           .toString()
                           .contains(RegExp(r"^[a-zA-Z0-9@\._]+$"))) {
                         hasFieldError['Email'] = "Invalid Email";
-                      }else{
+                      } else {
                         hasFieldError.remove('Email');
                       }
                     },
+                    minLines: 1,
                     controller: Email,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('Email') &&
                               Email.text.isNotEmpty)
                           ? Text(hasFieldError['Email'].toString(),
-                              style: TextStyle(color: Colors.red))
-                          : Text("Email"),
+                              style: const TextStyle(color: Colors.red))
+                          : const Text("Email"),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('Email') &&
                                     Email.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
+                            width: 1.5,
                           )),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('Email') &&
                                   Email.text.isNotEmpty)
                               ? Colors.red
                               : Colors.black,
+                          width: 1.5,
                         ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 30),
                 Obx(
                   () => TextField(
                     controller: Pass,
                     obscureText: hidePass.value,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.5,
+                        ),
                       ),
-                      label: Text("Password"),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.5,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.5,
+                        ),
+                      ),
+                      label: const Text("Password"),
                       suffixIcon: InkWell(
                         onTap: () {
                           hidePass.value = !hidePass.value;
-                          print(hidePass.value);
+                          // print(hidePass.value);
                         },
                         child: Icon(
                           (hidePass.value)
@@ -148,107 +174,124 @@ class AuthView extends GetView<AuthController> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Obx(
-                      () => Checkbox(
-                        value: rememberMe.value,
-                        onChanged: (value) {
-                          rememberMe.value = !rememberMe.value;
-                        },
+                const SizedBox(height: 12),
+                Container(
+                  width: 180.0,
+                  height: 30.0,
+                  margin: const EdgeInsets.only(bottom: 15.0),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.black,
+                        width: 1.5,
                       ),
-                    ),
-                    Text("Remember Me?"),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    if(hasFieldError.isEmpty){
-                      AuthController().login(Email.text, Pass.text);
-                    }else{
-                      Get.defaultDialog(
-                        title: "Login Failed",
-                        middleText: "Make sure there is no error warning on the form",
-                        confirm: TextButton(onPressed: () => Get.back(), child: Text("OK")),
-                      );
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 7, 15, 7),
-                    decoration: BoxDecoration(
-                      color: Themes.light.primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 0,
-                          blurRadius: 2,
-                          offset: Offset(1, 1),
-                        ),
-                      ],
-                    ),
-                    child: Text(
-                      "LOGIN",
-                      style: TextStyle(
-                          letterSpacing: 1,
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: TextStyle(
-                        fontSize: 12,
+                  child: Row(
+                    children: [
+                      Obx(
+                        () => Checkbox(
+                          value: rememberMe.value,
+                          onChanged: (value) {
+                            rememberMe.value = !rememberMe.value;
+                          },
+                        ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        isLogin.value = !isLogin.value;
-                        clearTextController();
-                      },
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline),
-                      ),
-                    ),
-                  ],
+                      const Text("Remember Me?"),
+                    ],
+                  ),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
-          SizedBox(
-            height: 30,
+          const SizedBox(height: 20),
+          Obx(() {
+            if (controller.isLoading.value) {
+              return ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Themes.light.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 2.0,
+                ),
+                child: const SizedBox(
+                  width: 20.0,
+                  height: 20.0,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ),
+              );
+            } else {
+              return ElevatedButton(
+                onPressed: () async {
+                  if (hasFieldError.isEmpty) {
+                    try {
+                      await controller.login(Email.text, Pass.text);
+                    } catch (error) {
+                      controller.isLoading.value = false;
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Themes.light.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 2.0,
+                ),
+                child: const Text(
+                  "LOGIN",
+                  style: TextStyle(
+                    letterSpacing: 1,
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            }
+          }),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Don't have an account? ",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  isLogin.value = !isLogin.value;
+                  clearTextController();
+                },
+                child: const Text(
+                  "Register",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
     Widget Register = Container(
-      width: MediaQuery.of(context).size.width - 50,
-      height: MediaQuery.of(context).size.height * 0.8,
+      padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 2.0),
+      width: double.infinity,
       decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("images/polygons.png"), fit: BoxFit.cover),
+        image: const DecorationImage(
+          image: AssetImage("assets/images/polygons.png"),
+          fit: BoxFit.cover,
+        ),
         borderRadius: BorderRadius.circular(30),
         color: Colors.white,
         boxShadow: [
@@ -256,44 +299,54 @@ class AuthView extends GetView<AuthController> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 0,
             blurRadius: 3,
-            offset: Offset(5, 5),
+            offset: const Offset(5, 5),
           ),
         ],
       ),
       child: Column(
         children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  "REGISTER",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
+          const Text(
+            "Register",
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),
           ),
-          Padding(
-            padding: EdgeInsets.all(15),
+          Container(
+            margin: const EdgeInsets.only(top: 50.0, bottom: 30.0),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                    controller: Name,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(55),                      
-                    ],
-                    decoration: InputDecoration(
-                      label: Text("Name"),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  controller: Name,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(55),
+                  ],
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10),
+                    label: const Text("Name"),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 1.5,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                        width: 1.5,
                       ),
                     ),
                   ),
-                SizedBox(
-                  height: 10,
                 ),
+                const SizedBox(height: 10),
                 Obx(
                   () => TextField(
                     onChanged: (controller) {
@@ -307,65 +360,81 @@ class AuthView extends GetView<AuthController> {
                     },
                     controller: Email,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('Email') &&
                               Email.text.isNotEmpty)
                           ? Text(hasFieldError['Email'].toString(),
-                              style: TextStyle(color: Colors.red))
-                          : Text("Email"),
+                              style: const TextStyle(color: Colors.red))
+                          : const Text("Email"),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('Email') &&
                                     Email.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
+                            width: 1.5,
                           )),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('Email') &&
                                   Email.text.isNotEmpty)
                               ? Colors.red
-                              : Colors.black,
+                              : Colors.grey,
+                          width: 1.5,
                         ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 TextField(
-                    onChanged: (controller) {
-                      if (Npm.text.toString().length > 10) {
-                        hasFieldError['Npm'] =
-                            "Over Maximum npm ${Npm.text.toString().length} / 10";
-                      } else {
-                        hasFieldError.remove('Npm');
-                      }
-                    },
-                    controller: Npm,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                    decoration: InputDecoration(
-                      label: Text("Npm"),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  onChanged: (controller) {
+                    if (Npm.text.toString().length > 10) {
+                      hasFieldError['Npm'] =
+                          "Over Maximum npm ${Npm.text.toString().length} / 10";
+                    } else {
+                      hasFieldError.remove('Npm');
+                    }
+                  },
+                  controller: Npm,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ],
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10),
+                    label: const Text("Npm"),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 1.5,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                        width: 1.5,
                       ),
                     ),
                   ),
-                SizedBox(
-                  height: 10,
                 ),
+                const SizedBox(height: 10),
                 TextField(
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
@@ -373,17 +442,31 @@ class AuthView extends GetView<AuthController> {
                   ],
                   controller: Phone,
                   decoration: InputDecoration(
-                    label: Text("Phone"),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10),
+                    label: const Text("Phone"),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 1.5,
+                      ),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                        width: 1.5,
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Obx(
                   () => TextField(
                     onChanged: (controller) {
@@ -397,31 +480,39 @@ class AuthView extends GetView<AuthController> {
                     controller: Pass,
                     obscureText: hidePass.value,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('Pass') &&
                               Pass.text.isNotEmpty)
                           ? Text(hasFieldError['Pass'].toString(),
-                              style: TextStyle(color: Colors.red))
-                          : Text("Pass"),
+                              style: const TextStyle(color: Colors.red))
+                          : const Text("Pass"),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                          width: 1.5,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('Pass') &&
                                     Pass.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
+                            width: 1.5,
                           )),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('Pass') &&
                                   Pass.text.isNotEmpty)
                               ? Colors.red
-                              : Colors.black,
+                              : Colors.grey,
+                          width: 1.5,
                         ),
                       ),
                       suffixIcon: InkWell(
@@ -437,9 +528,7 @@ class AuthView extends GetView<AuthController> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Obx(
                   () => TextField(
                     onChanged: (controller) {
@@ -452,31 +541,39 @@ class AuthView extends GetView<AuthController> {
                     controller: PassConfirm,
                     obscureText: hidePassConfirm.value,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('PassConfirm') &&
                               PassConfirm.text.isNotEmpty)
                           ? Text(hasFieldError['PassConfirm'].toString(),
-                              style: TextStyle(color: Colors.red))
-                          : Text("PassConfirm"),
+                              style: const TextStyle(color: Colors.red))
+                          : const Text("PassConfirm"),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                          width: 1.5,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('PassConfirm') &&
                                     PassConfirm.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
+                            width: 1.5,
                           )),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('PassConfirm') &&
                                   PassConfirm.text.isNotEmpty)
                               ? Colors.red
-                              : Colors.black,
+                              : Colors.grey,
+                          width: 1.5,
                         ),
                       ),
                       suffixIcon: InkWell(
@@ -492,129 +589,140 @@ class AuthView extends GetView<AuthController> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
               ],
             ),
           ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    if(hasFieldError.isEmpty){
-                      AuthController().register( Name.text, Email.text, Npm.text, Phone.text, Pass.text);
-                    }else{
-                      Get.defaultDialog(
-                        title: "Registration Failed",
-                        middleText: "Make sure there is no error warning on the form",
-                        confirm: TextButton(onPressed: () => Get.back(), child: Text("OK")),
-                      );
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 7, 15, 7),
-                    decoration: BoxDecoration(
-                      color: Themes.light.primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 0,
-                          blurRadius: 2,
-                          offset: Offset(1, 1),
-                        ),
-                      ],
-                    ),
-                    child: Text(
-                      "REGISTER",
-                      style: TextStyle(
-                          letterSpacing: 1,
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
+          Obx(() {
+            if (controller.isLoading.value) {
+              return ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Themes.light.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 2.0,
+                ),
+                child: const SizedBox(
+                  width: 20.0,
+                  height: 20.0,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account? ",
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        isLogin.value = !isLogin.value;
-                        clearTextController();
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline),
-                      ),
-                    ),
-                  ],
+              );
+            } else {
+              return ElevatedButton(
+                onPressed: () async {
+                  await controller.register(
+                    Name.text,
+                    Email.text,
+                    Npm.text,
+                    Phone.text,
+                    Pass.text,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Themes.light.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 2.0,
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
+                child: const Text(
+                  "REGISTER",
+                  style: TextStyle(
+                    letterSpacing: 1,
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            }
+          }),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Already have an account? ",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  isLogin.value = !isLogin.value;
+                  clearTextController();
+                },
+                child: const Text(
+                  "Login",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
+
     return Scaffold(
-      body: Obx(
-        () => Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: Color.fromARGB(255, 238, 228, 207),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "TVENT",
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            color: const Color.fromARGB(255, 195, 125, 125),
-                            offset: const Offset(4.0, 4.0),
-                            blurRadius: 0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (isLogin.value) Login else Register,
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text("2023 Const AlRight reserved"),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
+      backgroundColor: const Color.fromARGB(255, 238, 228, 207),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        centerTitle: true,
+        title: const Text(
+          "TVENT",
+          style: TextStyle(
+            color: Color(0xff1E2126),
+            fontSize: 35,
+            fontWeight: FontWeight.w900,
+            shadows: [
+              Shadow(
+                color: Color(0xffBD83B8),
+                offset: Offset(4.0, 4.0),
+                blurRadius: 0,
               ),
             ],
           ),
         ),
+      ),
+      body: Obx(
+        () => Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: isLogin.value ? Login : Register,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            height: 30.0,
+            color: Colors.transparent,
+          ),
+          const Positioned(
+            bottom: 10.0,
+            child: Text(
+              "©2023 Const AlRight reserved",
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
       ),
     );
   }
