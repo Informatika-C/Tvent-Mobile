@@ -7,7 +7,7 @@ class AboutController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-        print('About Init');
+    print('About Init');
   }
 
   @override
