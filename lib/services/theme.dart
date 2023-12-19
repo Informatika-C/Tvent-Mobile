@@ -25,7 +25,7 @@ class Themes {
     colorScheme: const ColorScheme.dark(
       background: Color(0XFF06142E),
       primary: Color(0xfff2f2f2),
-      tertiary: Color(0XFF262A32),
+      tertiary: Color(0XFF1E2126),
       scrim: Colors.white,
       secondary: Color(0xFFFF8C00),
       surface: Color(0XFF262A32),
