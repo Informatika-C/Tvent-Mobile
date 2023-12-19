@@ -1,0 +1,1 @@
+const HOST_SERVER = 'https://tvent.azurewebsites.net';

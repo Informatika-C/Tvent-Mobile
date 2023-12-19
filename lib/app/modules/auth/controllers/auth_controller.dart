@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
@@ -13,7 +14,7 @@ class AuthController extends GetxController {
       isLoading.value = true;
 
       final response = await dio.post(
-        'https://tvent.azurewebsites.net/api/login',
+        '$HOST_SERVER/api/login',
         data: {'email': email, 'password': password},
       );
 
@@ -42,7 +43,7 @@ class AuthController extends GetxController {
       isLoading.value = true;
 
       final response = await dio.post(
-        'https://tvent.azurewebsites.net/api/register',
+        '$HOST_SERVER/api/register',
         data: {
           'name': name,
           'npm': npm,
