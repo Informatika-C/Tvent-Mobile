@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tvent/app/constant_variable.dart';
+import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   final dio = Dio();
+  late User user;
 
   RxBool isLoading = false.obs;
 
@@ -13,9 +17,21 @@ class AuthController extends GetxController {
       isLoading.value = true;
 
       final response = await dio.post(
-        'https://tvent.azurewebsites.net/api/login',
+        '$HOST_SERVER/api/login',
         data: {'email': email, 'password': password},
       );
+
+      final userRes = response.data['user'];
+      user = User(
+          userRes['id'].toString(),
+          userRes['name'].toString(),
+          userRes['email'].toString(),
+          userRes['npm'].toString(),
+          userRes['phone'].toString());
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      await sharedPreferences.setString('user', user.toJson().toString());
 
       isLoading.value = false;
 
@@ -23,6 +39,7 @@ class AuthController extends GetxController {
       return true;
     } catch (error) {
       isLoading.value = false;
+      print(error);
 
       Get.defaultDialog(
         title: "Login Failed",
@@ -41,8 +58,8 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await dio.post(
-        'https://tvent.azurewebsites.net/api/register',
+      await dio.post(
+        '$HOST_SERVER/api/register',
         data: {
           'name': name,
           'npm': npm,

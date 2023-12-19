@@ -30,6 +30,12 @@ class HomeView extends GetView<HomeController> {
             ),
             EventCarousel(),
             CarouselImageWidget(),
+            const Center(
+              child: Text(
+                "©2023 CONST - All Right Reserved",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
+            )
           ],
         ),
       ),

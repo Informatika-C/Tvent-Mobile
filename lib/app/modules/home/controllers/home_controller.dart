@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/modules/home/models/category_model.dart';
 import 'package:tvent/app/modules/home/models/event_model.dart';
+import '../../../models/user_model.dart';
 
 class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();
   RxBool isTitleVisible = true.obs;
   var selectedIndex = 0.obs;
   var itemCount = 10.obs;
+  final user = User('', '', '', '', '').obs;
 
   final List<String> textItems = [
     'Unlock Your Potential!',
@@ -55,13 +60,25 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     scrollController.addListener(() {
       final double offset = scrollController.offset;
       // Sesuaikan logika berdasarkan posisi scroll yang diinginkan
       isTitleVisible.value = offset < 100.0;
     });
+
+    // print(await getUser());
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? userString = sharedPreferences.getString('user');
+
+    if (userString == null) {
+      print("is null");
+    } else {
+      Map<String, dynamic> userJson = jsonDecode(userString);
+      user.value = User.fromJson(userJson);
+    }
   }
 
   @override
