@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Themes {
   static final light = ThemeData(
     primaryColor: const Color(0XFFE67E22),
     scaffoldBackgroundColor: Colors.transparent,
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+    fontFamily: 'Montserrat',
     colorScheme: const ColorScheme.light(
       background: Color(0XFFE1DCD1),
       primary: Color(0XFF1E2126),
@@ -22,7 +21,7 @@ class Themes {
   static final dark = ThemeData(
     primaryColor: const Color(0XFF262A32),
     scaffoldBackgroundColor: Colors.transparent,
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+    fontFamily: 'Montserrat',
     colorScheme: const ColorScheme.dark(
       background: Color(0XFF06142E),
       primary: Color(0xfff2f2f2),

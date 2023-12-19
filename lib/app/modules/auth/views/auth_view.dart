@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:tvent/app/modules/auth/views/animate_tvent.dart';
 import 'package:tvent/services/theme.dart';
 import '../controllers/auth_controller.dart';
 
@@ -40,15 +41,15 @@ class AuthView extends GetView<AuthController> {
           fit: BoxFit.cover,
           alignment: Alignment.topCenter,
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(40),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0,
-            blurRadius: 3,
-            offset: const Offset(5, 5),
-          ),
+            color: const Color(0xff000000).withOpacity(0.25),
+            offset: const Offset(3, 3),
+            blurRadius: 4,
+            spreadRadius: 4,
+          )
         ],
       ),
       child: Column(
@@ -57,7 +58,7 @@ class AuthView extends GetView<AuthController> {
         children: [
           const Text(
             "Login",
-            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),
           ),
           Container(
             margin: const EdgeInsets.only(top: 50.0, bottom: 30.0),
@@ -71,7 +72,7 @@ class AuthView extends GetView<AuthController> {
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 13.7,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.w500),
             ),
           ),
           Padding(
@@ -240,17 +241,17 @@ class AuthView extends GetView<AuthController> {
                 style: ElevatedButton.styleFrom(
                   primary: Themes.light.primaryColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  elevation: 2.0,
+                  elevation: 7.0,
                 ),
                 child: const Text(
                   "LOGIN",
                   style: TextStyle(
                     letterSpacing: 1,
                     color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               );
@@ -292,15 +293,15 @@ class AuthView extends GetView<AuthController> {
           image: AssetImage("assets/images/polygons.png"),
           fit: BoxFit.cover,
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(40),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0,
-            blurRadius: 3,
-            offset: const Offset(5, 5),
-          ),
+            color: const Color(0XFf000000).withOpacity(0.25),
+            offset: const Offset(3, 3),
+            blurRadius: 4,
+            spreadRadius: 4,
+          )
         ],
       ),
       child: Column(
@@ -625,17 +626,17 @@ class AuthView extends GetView<AuthController> {
                 style: ElevatedButton.styleFrom(
                   primary: Themes.light.primaryColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  elevation: 2.0,
+                  elevation: 7.0,
                 ),
                 child: const Text(
                   "REGISTER",
                   style: TextStyle(
                     letterSpacing: 1,
                     color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               );
@@ -671,7 +672,7 @@ class AuthView extends GetView<AuthController> {
     );
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 238, 228, 207),
+      backgroundColor: const Color(0XFFE1DCD1),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -679,13 +680,13 @@ class AuthView extends GetView<AuthController> {
         title: const Text(
           "TVENT",
           style: TextStyle(
-            color: Color(0xff1E2126),
+            color: Color(0XFF1E2126),
             fontSize: 35,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w800,
             shadows: [
               Shadow(
                 color: Color(0xffBD83B8),
-                offset: Offset(4.0, 4.0),
+                offset: Offset(-4.0, 4.0),
                 blurRadius: 0,
               ),
             ],
@@ -700,7 +701,7 @@ class AuthView extends GetView<AuthController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: isLogin.value ? Login : Register,
                 ),
               ],
@@ -718,7 +719,7 @@ class AuthView extends GetView<AuthController> {
           const Positioned(
             bottom: 10.0,
             child: Text(
-              "©2023 Const AlRight reserved",
+              "©2023 CONST - AlRight reserved",
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
