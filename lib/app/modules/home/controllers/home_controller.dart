@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/modules/home/models/category_model.dart';
 import 'package:tvent/app/modules/home/models/event_model.dart';
+import 'package:tvent/services/auth_services.dart';
 import '../../../models/user_model.dart';
 
 class HomeController extends GetxController {
@@ -13,7 +14,8 @@ class HomeController extends GetxController {
   RxBool isTitleVisible = true.obs;
   var selectedIndex = 0.obs;
   var itemCount = 10.obs;
-  final user = User('', '', '', '', '').obs;
+  AuthServices authServices = Get.find<AuthServices>();
+  Rx<User?> user = Rx<User?>(null);
 
   final List<String> textItems = [
     'Unlock Your Potential!',
@@ -62,23 +64,19 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
     scrollController.addListener(() {
       final double offset = scrollController.offset;
       // Sesuaikan logika berdasarkan posisi scroll yang diinginkan
       isTitleVisible.value = offset < 100.0;
     });
 
-    // print(await getUser());
+    User? getUser = await authServices.getUser();
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? userString = sharedPreferences.getString('user');
-
-    if (userString == null) {
-      print("is null");
-    } else {
-      Map<String, dynamic> userJson = jsonDecode(userString);
-      user.value = User.fromJson(userJson);
+    if (getUser == null) {
+      user.value = null;
     }
+    user.value = getUser;
   }
 
   @override
