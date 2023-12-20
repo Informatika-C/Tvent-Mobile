@@ -49,7 +49,8 @@ class TopWidget extends StatelessWidget {
                           fontWeight: FontWeight.w400),
                     ),
                     TextSpan(
-                      text: homeController.user.value?.name ?? "Guest",
+                      text: homeController.authServices.user.value?.name ??
+                          "Guest",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: 20,
