@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/models/user_model.dart';
 
 class AuthServices extends GetxService {
-  Future<User?> get user async => await getUser();
+  late Rx<User?> user;
 
   Future<User?> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,5 +34,6 @@ class AuthServices extends GetxService {
   @override
   void onInit() async {
     super.onInit();
+    user = Rx<User?>(await getUser());
   }
 }

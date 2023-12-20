@@ -12,7 +12,6 @@ class HomeController extends GetxController {
   var selectedIndex = 0.obs;
   var itemCount = 10.obs;
   AuthServices authServices = Get.find<AuthServices>();
-  Rx<User?> user = Rx<User?>(null);
 
   final List<String> textItems = [
     'Unlock Your Potential!',
@@ -68,11 +67,7 @@ class HomeController extends GetxController {
       isTitleVisible.value = offset < 100.0;
     });
 
-    User? getUser = await authServices.user;
-    if (getUser == null) {
-      user.value = null;
-    }
-    user.value = getUser;
+    authServices.onInit();
   }
 
   @override
