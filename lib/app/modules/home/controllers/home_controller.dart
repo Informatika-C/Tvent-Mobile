@@ -71,8 +71,7 @@ class HomeController extends GetxController {
       isTitleVisible.value = offset < 100.0;
     });
 
-    User? getUser = await authServices.getUser();
-
+    User? getUser = await authServices.user;
     if (getUser == null) {
       user.value = null;
     }
