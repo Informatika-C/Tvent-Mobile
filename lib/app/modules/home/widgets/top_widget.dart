@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
+import 'package:tvent/services/auth_services.dart';
 
 class TopWidget extends StatelessWidget {
   final List<String> textItems;
   final HomeController homeController = Get.find();
+  AuthServices authServices = Get.find<AuthServices>();
 
   TopWidget({Key? key, required this.textItems}) : super(key: key);
 
@@ -49,8 +51,7 @@ class TopWidget extends StatelessWidget {
                           fontWeight: FontWeight.w400),
                     ),
                     TextSpan(
-                      text: homeController.authServices.user.value?.name ??
-                          "Guest",
+                      text: authServices.user.value?.name ?? "Guest",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: 20,
