@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/app/routes/app_pages.dart';

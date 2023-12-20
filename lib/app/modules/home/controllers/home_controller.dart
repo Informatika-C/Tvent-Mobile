@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/modules/home/models/category_model.dart';
 import 'package:tvent/app/modules/home/models/event_model.dart';
 import 'package:tvent/services/auth_services.dart';
