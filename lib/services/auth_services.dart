@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tvent/app/models/lomba_model.dart';
 import 'package:tvent/app/models/user_model.dart';
 
 class AuthServices extends GetxService {
@@ -46,6 +47,18 @@ class AuthServices extends GetxService {
     await prefs.setString('token', token);
 
     this.token.value = token;
+  }
+
+  Future<void> removeToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove('token');
+
+    token.value = null;
+  }
+
+  Future<void> setUserLomba(List<Lomba> lomba) async {
+    user.value?.lomba?.value = lomba;
   }
 
   @override
