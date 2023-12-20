@@ -6,6 +6,7 @@ import 'package:tvent/app/models/user_model.dart';
 
 class AuthServices extends GetxService {
   Rx<User?> user = Rx<User?>(null);
+  Rx<String?> token = Rx<String?>(null);
 
   Future<User?> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -31,9 +32,26 @@ class AuthServices extends GetxService {
     this.user.value = user;
   }
 
+  Future<String?> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? token = prefs.getString('token');
+
+    return token;
+  }
+
+  Future<void> setToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('token', token);
+
+    this.token.value = token;
+  }
+
   @override
   void onInit() async {
     super.onInit();
     user.value = await getUser();
+    token.value = await getToken();
   }
 }

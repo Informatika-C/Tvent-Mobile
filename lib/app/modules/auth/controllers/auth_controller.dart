@@ -23,6 +23,7 @@ class AuthController extends GetxController {
       );
 
       final userRes = response.data['user'];
+      final token = response.data['token'];
 
       User user = User(
         userRes['id'],
@@ -33,6 +34,7 @@ class AuthController extends GetxController {
       );
 
       await authServices.setUser(user);
+      await authServices.setToken(token);
 
       isLoading.value = false;
 
