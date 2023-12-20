@@ -5,10 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/app/routes/app_pages.dart';
+import 'package:tvent/services/auth_services.dart';
 
 class AuthController extends GetxController {
   final dio = Dio();
-  late User user;
+  AuthServices authServices = Get.find<AuthServices>();
 
   RxBool isLoading = false.obs;
 
@@ -22,16 +23,16 @@ class AuthController extends GetxController {
       );
 
       final userRes = response.data['user'];
-      user = User(
-          userRes['id'].toString(),
-          userRes['name'].toString(),
-          userRes['email'].toString(),
-          userRes['npm'].toString(),
-          userRes['phone'].toString());
 
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      await sharedPreferences.setString('user', user.toJson().toString());
+      User user = User(
+        userRes['id'],
+        userRes['name'],
+        userRes['email'],
+        userRes['npm'],
+        userRes['phone'],
+      );
+
+      await authServices.setUser(user);
 
       isLoading.value = false;
 

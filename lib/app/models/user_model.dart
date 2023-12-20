@@ -1,5 +1,5 @@
 class User {
-  String id;
+  int id;
   String name;
   String email;
   String npm;
@@ -15,10 +15,10 @@ class User {
         phone = json['phone'];
 
   Map<String, dynamic> toJson() => {
-        '"id"': '"$id"',
-        '"name"': '"$name"',
-        '"email"': '"$email"',
-        '"npm"': '"$npm"',
-        '"phone"': '"$phone"',
+        'id': id,
+        'name': name,
+        'email': email,
+        'npm': npm,
+        'phone': phone,
       };
 }
