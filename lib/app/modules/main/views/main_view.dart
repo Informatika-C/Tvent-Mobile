@@ -1,22 +1,23 @@
 import 'dart:ui';
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/widget/drawer.dart';
 import '../../../routes/app_nav.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
-  const MainView({super.key});
-  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // void _openSideMenu() {
-  //   _scaffoldKey.currentState?.openDrawer();
-  // }
+  MainView({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    Get.put(MainController());
+    Get.put(HomeController());
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Obx(() {
@@ -24,12 +25,13 @@ class MainView extends GetView<MainController> {
           return Text(NavPages.titles[currentIndex]);
         }),
         centerTitle: true,
-        // leading: IconButton(
-        //   icon: const Icon(IconlyBold.filter),
-        //   onPressed: () {
-        //     _openSideMenu();
-        //   },
-        // ),
+        // leading: const Icon(FontAwesomeIcons.diceD20),
+        leading: IconButton(
+          icon: const Icon(FontAwesomeIcons.diceD20),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+        ),
         flexibleSpace: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 20),
