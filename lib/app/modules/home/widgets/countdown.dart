@@ -114,38 +114,45 @@ class CountdownTimerWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(17.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18.0),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFFF8C00), Color(0xFFFF2D55)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                  Flexible(
+                    flex: 3,
+                    fit: FlexFit.loose,
+                    child: Container(
+                      padding: const EdgeInsets.all(17.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18.0),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFFF8C00), Color(0xFFFF2D55)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                       ),
-                    ),
-                    child: CountdownTimer(
-                      targetDate: targetDate,
+                      child: CountdownTimer(
+                        targetDate: targetDate,
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(12, 74),
-                      backgroundColor: const Color(0XFF10A7E8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                  Flexible(
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(12, 74),
+                        backgroundColor: const Color(0XFF10A7E8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        padding: const EdgeInsets.all(6.0),
                       ),
-                      padding: const EdgeInsets.all(6.0),
-                    ),
-                    child: const Text(
-                      "JOIN\nnow!",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
+                      child: const Text(
+                        "JOIN\nnow!",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w900),
+                      ),
                     ),
                   ),
                 ],
-              ),
+              )
             ],
           ),
         ),
@@ -192,35 +199,36 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 10.0,
+      runSpacing: 10.0,
       children: [
         CountdownPart("Days", _countdownTime.days.toString()),
-        const SizedBox(width: 10),
-        const Text(
-          ":",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w900, color: Colors.black),
-        ),
-        const SizedBox(width: 10),
+        const CountdownSeparator(),
         CountdownPart("Hours", _countdownTime.hours.toString()),
-        const SizedBox(width: 10),
-        const Text(
-          ":",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w900, color: Colors.black),
-        ),
-        const SizedBox(width: 10),
+        const CountdownSeparator(),
         CountdownPart("Minutes", _countdownTime.minutes.toString()),
-        const SizedBox(width: 10),
-        const Text(
-          ":",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w900, color: Colors.black),
-        ),
-        const SizedBox(width: 10),
+        const CountdownSeparator(),
         CountdownPart("Seconds", _countdownTime.seconds.toString()),
       ],
+    );
+  }
+}
+
+class CountdownSeparator extends StatelessWidget {
+  const CountdownSeparator();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      ":",
+      style: TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.w500,
+        color: Colors.black,
+      ),
     );
   }
 }

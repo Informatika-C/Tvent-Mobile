@@ -81,7 +81,7 @@ class AuthController extends GetxController {
           onPressed: () {
             Get.back();
           },
-          child: Text("OK"),
+          child: const Text("OK"),
         ),
       );
     } catch (error) {
@@ -94,7 +94,7 @@ class AuthController extends GetxController {
           onPressed: () {
             Get.back();
           },
-          child: Text("OK"),
+          child: const Text("OK"),
         ),
       );
 

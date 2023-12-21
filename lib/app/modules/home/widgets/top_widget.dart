@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
-import 'package:tvent/services/auth_services.dart';
 
 class TopWidget extends StatelessWidget {
   final List<String> textItems;
   final HomeController homeController = Get.find();
-  AuthServices authServices = Get.find<AuthServices>();
 
-  TopWidget({Key? key, required this.textItems}) : super(key: key);
+  TopWidget({super.key, required this.textItems});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +18,9 @@ class TopWidget extends StatelessWidget {
         children: [
           buildAppBar(context),
           TopWidgetSlider(textItems: textItems),
-          const Divider(
+          Divider(
             thickness: 2,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.inverseSurface,
           ),
         ],
       ),
@@ -51,7 +49,7 @@ class TopWidget extends StatelessWidget {
                           fontWeight: FontWeight.w400),
                     ),
                     TextSpan(
-                      text: authServices.user.value?.name ?? "Guest",
+                      text: homeController.user.value?.name ?? "Guest",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: 20,
@@ -97,15 +95,15 @@ class TopWidgetSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
+      disableGesture: true,
       options: CarouselOptions(
         height: 30,
         viewportFraction: 1.0,
         scrollDirection: Axis.vertical,
         autoPlay: true,
+        scrollPhysics: const NeverScrollableScrollPhysics(),
         autoPlayInterval: const Duration(seconds: 3),
         autoPlayAnimationDuration: const Duration(milliseconds: 800),
-        pauseAutoPlayOnTouch: true,
-        enlargeCenterPage: false,
       ),
       itemCount: textItems.length,
       itemBuilder: (context, index, realIndex) {

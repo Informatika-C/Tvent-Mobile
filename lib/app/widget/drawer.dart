@@ -1,4 +1,3 @@
-// app_drawer.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -8,9 +7,11 @@ import 'package:tvent/app/routes/app_nav.dart';
 import 'package:tvent/services/theme_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../modules/home/controllers/home_controller.dart';
+
 class AppDrawer extends StatelessWidget {
-  final MainController controller =
-      Get.find<MainController>(); // Ambil instance controller
+  final MainController controller = Get.find<MainController>();
+  final HomeController homeController = Get.find<HomeController>();
 
   Future<void> _launchUrl(String url) async {
     final Uri uri = Uri(scheme: "https", host: url);
@@ -30,19 +31,34 @@ class AppDrawer extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-              'Your Name',
+              homeController.user.value?.name ?? '',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
               ),
             ),
-            accountEmail: Text(
-              'your.email@example.com',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+            accountEmail: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              child: Text(
+                homeController.user.value?.email ?? '',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
               ),
             ),
-            currentAccountPicture: const CircleAvatar(
-              child: FlutterLogo(size: 42.0),
+            currentAccountPicture: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                'https://avatars.githubusercontent.com/u/101344946?v=4',
+                width: 52.0,
+                height: 52.0,
+                fit: BoxFit.cover,
+              ),
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.background,
@@ -80,6 +96,24 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               ThemeService().switchTheme();
             },
+          ),
+          ListTile(
+            leading: const Icon(IconlyLight.logout),
+            title: const Text('Logout'),
+            onTap: () {
+              homeController.logout(
+                homeController.user.value?.name ?? '',
+              );
+            },
+          ),
+          const Divider(),
+          Text(
+            "©2023 CONST - All Rights Reserved",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 10,
+              fontWeight: FontWeight.w200,
+            ),
           ),
         ],
       ),
