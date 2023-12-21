@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/models/lomba_model.dart';
-import 'package:tvent/services/auth_services.dart';
 import '../controllers/profile_controller.dart';
+import 'package:tvent/app/models/user_model.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({super.key});
 
   final controller = Get.put(ProfileController());
-  final user = Get.find<AuthServices>().user;
-  final lomba = Get.find<AuthServices>().user.value?.lomba;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: user.value != null
+        body: controller.user.value != null
             ? SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -37,7 +36,7 @@ class ProfileView extends StatelessWidget {
                       () => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ...userInformation(user),
+                          ...userInformation(controller.user),
                           const SizedBox(
                             height: 5,
                           ),
@@ -52,14 +51,10 @@ class ProfileView extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          GridView.count(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 100 / 160,
-                            children: gridChildren(lomba ?? []),
+                          ResponsiveStaggeredGridList(
+                            desiredItemWidth: 110,
+                            minSpacing: 10,
+                            children: gridChildren(controller.lomba ?? []),
                           ),
                         ],
                       ),
@@ -72,7 +67,7 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-List<Widget> userInformation(user) {
+List<Widget> userInformation(Rx<User?> user) {
   return [
     Text(
       user.value?.name ?? '',
@@ -117,7 +112,7 @@ Widget divider(context) {
   );
 }
 
-List<Container> gridChildren(List<Lomba> lomba) {
+List<Container> gridChildren(List<Lomba?> lomba) {
   return List.generate(
     lomba.length,
     (index) => Container(
@@ -130,28 +125,32 @@ List<Container> gridChildren(List<Lomba> lomba) {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             height: 100,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 114, 114, 114),
-            ),
-            child: Image.network(
-              lomba[index].poster,
-              fit: BoxFit.cover,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 114, 114, 114),
+              image: DecorationImage(
+                image: NetworkImage(lomba[index]?.poster ?? ''),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                bottom: 20,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    lomba[index].name,
+                    lomba[index]?.name ?? '',
                     style: const TextStyle(
                         fontWeight: FontWeight.w600, color: Colors.black),
                   ),
                   Text(
-                    lomba[index].date,
+                    lomba[index]?.date ?? '',
                     style: const TextStyle(
                         fontWeight: FontWeight.w600, color: Colors.black),
                   ),

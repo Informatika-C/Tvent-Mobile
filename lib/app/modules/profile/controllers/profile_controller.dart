@@ -4,6 +4,8 @@ import 'package:tvent/services/auth_services.dart';
 
 class ProfileController extends GetxController {
   AuthServices authServices = Get.find<AuthServices>();
+  final user = Get.find<AuthServices>().user;
+  final lomba = Get.find<AuthServices>().user.value?.lomba;
 
   @override
   void onInit() {
