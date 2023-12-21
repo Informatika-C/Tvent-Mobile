@@ -4,7 +4,7 @@ import 'package:tvent/app/modules/home/controllers/home_controller.dart';
 import '../models/category_model.dart';
 
 class CategoryWidget extends StatelessWidget {
-  final HomeController homeController = Get.put(HomeController());
+  final HomeController homeController = Get.find();
 
   CategoryWidget({super.key});
 

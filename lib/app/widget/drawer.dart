@@ -31,7 +31,7 @@ class AppDrawer extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-              homeController.user.value.name,
+              homeController.user.value?.name ?? '',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 20,
@@ -45,7 +45,7 @@ class AppDrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               child: Text(
-                homeController.user.value.email,
+                homeController.user.value?.email ?? '',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
@@ -102,7 +102,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () {
               homeController.logout(
-                homeController.user.value.name,
+                homeController.user.value?.name ?? '',
               );
             },
           ),
