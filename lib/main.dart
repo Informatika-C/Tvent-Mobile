@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tvent/services/auth_services.dart';
@@ -11,15 +12,19 @@ void main() async {
   Get.put(AuthServices());
   Get.put(ThemeService());
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      theme: Themes.light,
-      darkTheme: Themes.dark,
-      themeMode: ThemeService().theme,
-    ),
-  );
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(
+      GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Application",
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        theme: Themes.light,
+        darkTheme: Themes.dark,
+        themeMode: ThemeService().theme,
+      ),
+    );
+  });
 }

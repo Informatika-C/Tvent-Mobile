@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/services/theme.dart';
 import '../controllers/auth_controller.dart';
@@ -7,31 +8,31 @@ import '../controllers/auth_controller.dart';
 class AuthView extends GetView<AuthController> {
   AuthView({Key? key}) : super(key: key);
 
-  final Name = TextEditingController();
-  final Email = TextEditingController();
-  final Npm = TextEditingController();
-  final Phone = TextEditingController();
-  final PassConfirm = TextEditingController();
-  final Pass = TextEditingController();
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final npm = TextEditingController();
+  final phone = TextEditingController();
+  final passConfirm = TextEditingController();
+  final pass = TextEditingController();
 
-  RxMap<String, String> hasFieldError = <String, String>{}.obs;
-  RxBool rememberMe = false.obs;
-  RxBool hidePass = true.obs;
-  RxBool hidePassConfirm = true.obs;
-  RxBool isLogin = true.obs;
+  final RxMap<String, String> hasFieldError = <String, String>{}.obs;
+  final RxBool rememberMe = false.obs;
+  final RxBool hidePass = true.obs;
+  final RxBool hidePassConfirm = true.obs;
+  final RxBool isLogin = true.obs;
 
   void clearTextController() {
-    Name.clear();
-    Email.clear();
-    Npm.clear();
-    Phone.clear();
-    Pass.clear();
-    PassConfirm.clear();
+    name.clear();
+    email.clear();
+    npm.clear();
+    phone.clear();
+    pass.clear();
+    passConfirm.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget Login = Container(
+    Widget login = Container(
       padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 2.0),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -83,9 +84,10 @@ class AuthView extends GetView<AuthController> {
               children: [
                 Obx(
                   () => TextField(
+                    cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
                     onChanged: (controller) {
-                      if (!Email.text
+                      if (!email.text
                           .toString()
                           .contains(RegExp(r"^[a-zA-Z0-9@\._]+$"))) {
                         hasFieldError['Email'] = "Invalid Email";
@@ -94,12 +96,12 @@ class AuthView extends GetView<AuthController> {
                       }
                     },
                     minLines: 1,
-                    controller: Email,
+                    controller: email,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('Email') &&
-                              Email.text.isNotEmpty)
+                              email.text.isNotEmpty)
                           ? Text(hasFieldError['Email'].toString(),
                               style: const TextStyle(color: Colors.red))
                           : const Text("Email",
@@ -113,7 +115,7 @@ class AuthView extends GetView<AuthController> {
                           borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('Email') &&
-                                    Email.text.isNotEmpty)
+                                    email.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
                             width: 1.5,
@@ -122,7 +124,7 @@ class AuthView extends GetView<AuthController> {
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('Email') &&
-                                  Email.text.isNotEmpty)
+                                  email.text.isNotEmpty)
                               ? Colors.red
                               : Colors.black,
                           width: 1.5,
@@ -134,8 +136,9 @@ class AuthView extends GetView<AuthController> {
                 const SizedBox(height: 30),
                 Obx(
                   () => TextField(
+                    cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
-                    controller: Pass,
+                    controller: pass,
                     obscureText: hidePass.value,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
@@ -172,8 +175,9 @@ class AuthView extends GetView<AuthController> {
                         },
                         child: Icon(
                           (hidePass.value)
-                              ? Icons.remove_red_eye_rounded
-                              : Icons.remove_red_eye_outlined,
+                              ? FontAwesomeIcons.eyeLowVision
+                              : FontAwesomeIcons.eye,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -229,7 +233,7 @@ class AuthView extends GetView<AuthController> {
               return ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  primary: Themes.light.primaryColor,
+                  backgroundColor: Themes.light.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -248,14 +252,14 @@ class AuthView extends GetView<AuthController> {
                 onPressed: () async {
                   if (hasFieldError.isEmpty) {
                     try {
-                      await controller.login(Email.text, Pass.text);
+                      await controller.login(email.text, pass.text);
                     } catch (error) {
                       controller.isLoading.value = false;
                     }
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Themes.light.primaryColor,
+                  backgroundColor: Themes.light.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -299,7 +303,7 @@ class AuthView extends GetView<AuthController> {
         ],
       ),
     );
-    Widget Register = Container(
+    Widget register = Container(
       padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 2.0),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -333,8 +337,9 @@ class AuthView extends GetView<AuthController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
+                  cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
-                  controller: Name,
+                  controller: name,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(55),
                   ],
@@ -367,9 +372,10 @@ class AuthView extends GetView<AuthController> {
                 const SizedBox(height: 10),
                 Obx(
                   () => TextField(
+                    cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
                     onChanged: (controller) {
-                      if (!Email.text
+                      if (!email.text
                           .toString()
                           .contains(RegExp(r"^[a-zA-Z0-9@\._]+$"))) {
                         hasFieldError['Email'] = "Invalid Email";
@@ -377,12 +383,12 @@ class AuthView extends GetView<AuthController> {
                         hasFieldError.remove('Email');
                       }
                     },
-                    controller: Email,
+                    controller: email,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('Email') &&
-                              Email.text.isNotEmpty)
+                              email.text.isNotEmpty)
                           ? Text(hasFieldError['Email'].toString(),
                               style: const TextStyle(color: Colors.red))
                           : const Text("Email",
@@ -396,7 +402,7 @@ class AuthView extends GetView<AuthController> {
                           borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('Email') &&
-                                    Email.text.isNotEmpty)
+                                    email.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
                             width: 1.5,
@@ -405,7 +411,7 @@ class AuthView extends GetView<AuthController> {
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('Email') &&
-                                  Email.text.isNotEmpty)
+                                  email.text.isNotEmpty)
                               ? Colors.red
                               : Colors.grey,
                           width: 1.5,
@@ -416,16 +422,17 @@ class AuthView extends GetView<AuthController> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   onChanged: (controller) {
-                    if (Npm.text.toString().length > 10) {
+                    if (npm.text.toString().length > 10) {
                       hasFieldError['Npm'] =
-                          "Over Maximum npm ${Npm.text.toString().length} / 10";
+                          "Over Maximum npm ${npm.text.toString().length} / 10";
                     } else {
                       hasFieldError.remove('Npm');
                     }
                   },
-                  controller: Npm,
+                  controller: npm,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(10),
@@ -458,12 +465,13 @@ class AuthView extends GetView<AuthController> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(13),
                   ],
-                  controller: Phone,
+                  controller: phone,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10),
@@ -493,22 +501,23 @@ class AuthView extends GetView<AuthController> {
                 const SizedBox(height: 10),
                 Obx(
                   () => TextField(
+                    cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
                     onChanged: (controller) {
-                      if (Pass.text.toString().length < 6) {
+                      if (pass.text.toString().length < 6) {
                         hasFieldError['Pass'] =
                             "Password At Least 6 characters";
                       } else {
                         hasFieldError.remove('Pass');
                       }
                     },
-                    controller: Pass,
+                    controller: pass,
                     obscureText: hidePass.value,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('Pass') &&
-                              Pass.text.isNotEmpty)
+                              pass.text.isNotEmpty)
                           ? Text(hasFieldError['Pass'].toString(),
                               style: const TextStyle(color: Colors.red))
                           : const Text("Pass",
@@ -526,7 +535,7 @@ class AuthView extends GetView<AuthController> {
                           borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('Pass') &&
-                                    Pass.text.isNotEmpty)
+                                    pass.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
                             width: 1.5,
@@ -535,7 +544,7 @@ class AuthView extends GetView<AuthController> {
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('Pass') &&
-                                  Pass.text.isNotEmpty)
+                                  pass.text.isNotEmpty)
                               ? Colors.red
                               : Colors.grey,
                           width: 1.5,
@@ -547,8 +556,9 @@ class AuthView extends GetView<AuthController> {
                         },
                         child: Icon(
                           (hidePass.value)
-                              ? Icons.remove_red_eye_rounded
-                              : Icons.remove_red_eye_outlined,
+                              ? FontAwesomeIcons.eyeLowVision
+                              : FontAwesomeIcons.eye,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -557,21 +567,23 @@ class AuthView extends GetView<AuthController> {
                 const SizedBox(height: 10),
                 Obx(
                   () => TextField(
+                    cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
                     onChanged: (controller) {
-                      if (PassConfirm.text.toString() != Pass.text.toString()) {
+                      if (passConfirm.text.toString() !=
+                          passConfirm.text.toString()) {
                         hasFieldError['PassConfirm'] = "Password didn't match";
                       } else {
                         hasFieldError.remove('PassConfirm');
                       }
                     },
-                    controller: PassConfirm,
+                    controller: passConfirm,
                     obscureText: hidePassConfirm.value,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10),
                       label: (hasFieldError.containsKey('PassConfirm') &&
-                              PassConfirm.text.isNotEmpty)
+                              passConfirm.text.isNotEmpty)
                           ? Text(hasFieldError['PassConfirm'].toString(),
                               style: const TextStyle(color: Colors.red))
                           : const Text("PassConfirm",
@@ -589,7 +601,7 @@ class AuthView extends GetView<AuthController> {
                           borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
                             color: (hasFieldError.containsKey('PassConfirm') &&
-                                    PassConfirm.text.isNotEmpty)
+                                    passConfirm.text.isNotEmpty)
                                 ? Colors.red
                                 : Colors.black,
                             width: 1.5,
@@ -598,7 +610,7 @@ class AuthView extends GetView<AuthController> {
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(
                           color: (hasFieldError.containsKey('PassConfirm') &&
-                                  PassConfirm.text.isNotEmpty)
+                                  passConfirm.text.isNotEmpty)
                               ? Colors.red
                               : Colors.grey,
                           width: 1.5,
@@ -610,8 +622,9 @@ class AuthView extends GetView<AuthController> {
                         },
                         child: Icon(
                           (hidePassConfirm.value)
-                              ? Icons.remove_red_eye_rounded
-                              : Icons.remove_red_eye_outlined,
+                              ? FontAwesomeIcons.eyeLowVision
+                              : FontAwesomeIcons.eye,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -625,7 +638,7 @@ class AuthView extends GetView<AuthController> {
               return ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  primary: Themes.light.primaryColor,
+                  backgroundColor: Themes.light.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -643,15 +656,15 @@ class AuthView extends GetView<AuthController> {
               return ElevatedButton(
                 onPressed: () async {
                   await controller.register(
-                    Name.text,
-                    Email.text,
-                    Npm.text,
-                    Phone.text,
-                    Pass.text,
+                    name.text,
+                    email.text,
+                    npm.text,
+                    phone.text,
+                    pass.text,
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Themes.light.primaryColor,
+                  backgroundColor: Themes.light.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -706,7 +719,7 @@ class AuthView extends GetView<AuthController> {
           "TVENT",
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
-            fontSize: 35,
+            fontSize: 45,
             fontWeight: FontWeight.w800,
             shadows: [
               Shadow(
@@ -721,14 +734,13 @@ class AuthView extends GetView<AuthController> {
       body: Obx(
         () => Center(
           child: SingleChildScrollView(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 26.0, vertical: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: isLogin.value ? Login : Register,
-                ),
+                isLogin.value ? login : register,
               ],
             ),
           ),

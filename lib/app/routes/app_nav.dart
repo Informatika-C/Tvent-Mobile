@@ -34,8 +34,8 @@ class NavPages {
     ),
   ];
 
-  static final List<String> titles = const [
-    'Home',
+  static final List<String> titles = [
+    'Tvent',
     'Event',
     'About',
     'Profile',

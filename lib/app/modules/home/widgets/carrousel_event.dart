@@ -37,12 +37,13 @@ class Carousel extends StatelessWidget {
         );
       }).toList(),
       options: CarouselOptions(
-        height: 200.0,
-        viewportFraction: 1.0,
+        height: 50.0,
+        viewportFraction: 0.3,
         autoPlay: true,
-        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayInterval: const Duration(seconds: 2),
         autoPlayAnimationDuration: const Duration(milliseconds: 800),
-        autoPlayCurve: Curves.fastOutSlowIn,
+        autoPlayCurve: Curves.easeOutSine,
+        scrollPhysics: const NeverScrollableScrollPhysics(),
       ),
     );
   }

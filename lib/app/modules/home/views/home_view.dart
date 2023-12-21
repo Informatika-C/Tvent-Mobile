@@ -28,12 +28,13 @@ class HomeView extends GetView<HomeController> {
             CountdownTimerWidget(
               targetDate: DateTime.now().add(const Duration(days: 5)),
             ),
-            EventCarousel(),
             CarouselImageWidget(),
+            EventCarousel(),
+            const SizedBox(height: 100.0),
             const Center(
               child: Text(
                 "©2023 CONST - All Right Reserved",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
             )
           ],

@@ -20,7 +20,7 @@ class _EventCarouselState extends State<EventCarousel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+          padding: const EdgeInsets.only(left: 8.0, top: 12.0),
           child: Text(
             "Popular Event",
             style: TextStyle(
@@ -33,12 +33,12 @@ class _EventCarouselState extends State<EventCarousel> {
         CarouselSlider(
           options: CarouselOptions(
             height: 250.0,
-            enableInfiniteScroll: true,
-            autoPlay: true,
+            enableInfiniteScroll: false,
+            autoPlay: false,
             enlargeCenterPage: false,
             aspectRatio: 1,
             autoPlayCurve: Curves.fastOutSlowIn,
-            viewportFraction: 1,
+            viewportFraction: 0.93,
             onPageChanged: (index, reason) {
               setState(() {
                 _current = index;
@@ -68,7 +68,7 @@ class _EventCarouselState extends State<EventCarousel> {
     return Container(
       width: _current == index ? 24.0 : 10.0,
       height: 10.0,
-      margin: const EdgeInsets.only(left: 5.0),
+      margin: const EdgeInsets.only(left: 9.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         color: _current == index
@@ -87,18 +87,18 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(4.0),
       child: Card(
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(17.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(10.0)),
+                  const BorderRadius.vertical(top: Radius.circular(17.0)),
               child: Image.network(
                 event.imageUrl,
                 height: 120.0,
