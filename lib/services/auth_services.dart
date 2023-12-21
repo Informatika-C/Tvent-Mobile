@@ -7,6 +7,7 @@ import 'package:tvent/app/models/user_model.dart';
 
 class AuthServices extends GetxService {
   Rx<User?> user = Rx<User?>(null);
+  RxList<Lomba?> lomba = RxList<Lomba?>.empty(growable: true);
   Rx<String?> token = Rx<String?>(null);
 
   Future<User?> getUser() async {
@@ -58,7 +59,7 @@ class AuthServices extends GetxService {
   }
 
   Future<void> setUserLomba(List<Lomba> lomba) async {
-    user.value?.lomba?.value = lomba;
+    this.lomba.value = lomba;
   }
 
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/models/lomba_model.dart';
+import 'package:tvent/app/modules/profile/views/profile_edit_view.dart';
+import 'package:tvent/services/theme.dart';
 import '../controllers/profile_controller.dart';
 import 'package:tvent/app/models/user_model.dart';
 import 'package:responsive_grid/responsive_grid.dart';
@@ -44,18 +46,30 @@ class ProfileView extends StatelessWidget {
                           const SizedBox(
                             height: 5,
                           ),
-                          const Text(
-                            "Lomba yang diikuti :",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          ResponsiveStaggeredGridList(
-                            desiredItemWidth: 110,
-                            minSpacing: 10,
-                            children: gridChildren(controller.lomba ?? []),
-                          ),
+                          controller.lomba?.isEmpty == true
+                              ? const Text(
+                                  "Belum ada lomba yang diikuti",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Lomba yang diikuti :",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    ResponsiveStaggeredGridList(
+                                      desiredItemWidth: 110,
+                                      minSpacing: 10,
+                                      children:
+                                          gridChildren(controller.lomba ?? []),
+                                    ),
+                                  ],
+                                ),
                         ],
                       ),
                     )
@@ -177,7 +191,9 @@ Widget photoProfile() {
 
 Widget editButton() {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      Get.dialog(ProfileEdit());
+    },
     child: Container(
       padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
