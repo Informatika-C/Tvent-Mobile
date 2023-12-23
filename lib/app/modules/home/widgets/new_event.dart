@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CardList extends StatelessWidget {
   final HomeController homeController = Get.find();
@@ -46,15 +47,17 @@ class CardList extends StatelessWidget {
           height: 180.0,
           width: double.infinity,
           child: Obx(
-            () {
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: homeController.itemCount.value,
-                itemBuilder: (context, index) {
-                  return CardItem(index + 1);
-                },
-              );
-            },
+            () => ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: homeController.homeModel.value.newEvents?.length ?? 5,
+              itemBuilder: (context, index) {
+                if (homeController.homeModel.value.newEvents?.length == null) {
+                  return const CardItemShimmer();
+                } else {
+                  return CardItem(index);
+                }
+              },
+            ),
           ),
         )
       ],
@@ -64,8 +67,9 @@ class CardList extends StatelessWidget {
 
 class CardItem extends StatelessWidget {
   final int index;
+  final homeController = Get.find<HomeController>();
 
-  const CardItem(this.index);
+  CardItem(this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -78,19 +82,50 @@ class CardItem extends StatelessWidget {
         height: 180.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          image: const DecorationImage(
-            image: NetworkImage(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPWmWrK2Dg1yLToSExBaoHVfztrx131etuZA&usqp=CAU'),
-            fit: BoxFit.cover,
-          ),
+          image: homeController.homeModel.value.newEvents?[index].imageUrl !=
+                  null
+              ? DecorationImage(
+                  image: NetworkImage(
+                    homeController.homeModel.value.newEvents?[index].imageUrl ??
+                        '',
+                  ),
+                  fit: BoxFit.cover,
+                )
+              : null,
         ),
         child: Center(
           child: Text(
-            'Item $index',
+            homeController.homeModel.value.newEvents?[index].name ?? '',
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// make card item shimmer
+class CardItemShimmer extends StatelessWidget {
+  const CardItemShimmer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Container(
+          width: 250.0,
+          height: 180.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.white,
           ),
         ),
       ),
