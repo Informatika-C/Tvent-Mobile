@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/profile/controllers/profile_controller.dart';
 
@@ -10,7 +11,34 @@ class ProfileEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          title: Text(
+            "Edit Profile",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 20,
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+              ),
+              child: const Icon(
+                FontAwesomeIcons.angleLeft,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           padding:
               const EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 20),
@@ -18,7 +46,6 @@ class ProfileEdit extends StatelessWidget {
             child: Obx(
               () => Column(
                 children: [
-                  const Text("Edit Profile", style: TextStyle(fontSize: 20)),
                   const SizedBox(
                     height: 10,
                   ),

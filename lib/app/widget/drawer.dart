@@ -101,8 +101,8 @@ class AppDrawer extends StatelessWidget {
             leading: const Icon(IconlyLight.logout),
             title: const Text('Logout'),
             onTap: () {
-              homeController.logout(
-                homeController.user.value?.name ?? '',
+              controller.logout(
+                controller.user.value?.name ?? '',
               );
             },
           ),

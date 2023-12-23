@@ -14,6 +14,18 @@ class ProfileController extends GetxController {
   final passwordConfirmation = ''.obs;
 
   final editLoading = false.obs;
+  RxBool isLoading = false.obs;
+  RxMap<int, bool> expansionStates = RxMap<int, bool>();
+
+  Future<void> toggleExpansion(bool value, int id) async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    expansionStates[id] = value;
+  }
+
+  void resetExpansionStates() {
+    expansionStates.clear();
+    print('clear');
+  }
 
   @override
   void onInit() {
@@ -45,8 +57,10 @@ class ProfileController extends GetxController {
     return;
   }
 
-  void getLomba() async {
+  Future<void> getLomba() async {
     try {
+      isLoading.value = true;
+
       final response = await Lomba.fetchUserListLomba();
       List<dynamic> lombaJson = response.data;
 
@@ -67,7 +81,10 @@ class ProfileController extends GetxController {
           .toList();
 
       authServices.setUserLomba(lomba);
+
+      isLoading.value = false;
     } catch (e) {
+      isLoading.value = false;
       print(e);
     }
   }
