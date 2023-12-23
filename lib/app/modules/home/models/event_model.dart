@@ -1,15 +1,31 @@
+import 'package:tvent/app/constant_variable.dart';
+
 class EventModel {
-  final String name;
-  final String organizer;
-  final String description;
-  final String imageUrl;
-  final String authorsImg;
+  int? id;
+  int? organizerId;
+  String? name;
+  String? organizer;
+  String? description;
+  String? imageUrl;
+  String? authorsImg;
+  String? location;
 
   EventModel({
-    required this.name,
-    required this.organizer,
-    required this.description,
-    required this.imageUrl,
-    required this.authorsImg,
-  });
+    this.id,
+    this.name,
+    this.organizerId,
+    this.organizer,
+    this.description,
+    this.imageUrl,
+    this.authorsImg,
+    this.location,
+  }) {
+    if (imageUrl != null && id != null) {
+      imageUrl = "$HOST_SERVER$imageUrl";
+    }
+    if (authorsImg != null && organizerId != null) {
+      authorsImg =
+          "$HOST_SERVER/storage/penyelenggara/logo/$organizerId/$authorsImg";
+    }
+  }
 }

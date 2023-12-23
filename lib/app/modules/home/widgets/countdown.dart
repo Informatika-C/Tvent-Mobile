@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tvent/app/modules/home/controllers/home_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CountdownTime {
   final int days;
@@ -31,9 +34,9 @@ CountdownTime _calculateCountdownTime(Duration duration) {
 
 class CountdownTimerWidget extends StatelessWidget {
   final DateTime targetDate;
+  final homeController = Get.find<HomeController>();
 
-  const CountdownTimerWidget({Key? key, required this.targetDate})
-      : super(key: key);
+  CountdownTimerWidget({Key? key, required this.targetDate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,110 +53,127 @@ class CountdownTimerWidget extends StatelessWidget {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Text(
-                "Breakfast Of Champions",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Container(
-                  height: 210.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPKALbf7w7ejN7njlOstHMOd7fWuguriCssA&usqp=CAU'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(8.0),
-                child: Text.rich(
+        Obx(
+          () => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            width: double.infinity,
+            child: Column(
+              children: [
+                Text(
+                  homeController.homeModel.value.nearestEvent?.name ?? "",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
-                  ),
-                  const TextSpan(
-                    text:
-                        "\t\t\t\tDeskripsi ini dapat berupa gambaran visual, karakteristik fisik, atau detail-detail lain yang dapat membantu pembaca memahami secara lebih baik.",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: "Berlokasi di ",
-                      ),
-                      TextSpan(
-                        text: "Universitas Teknokrat Indonesia",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                            "\n\n\t\t\t\t\tHal ini memungkinkan pengembang untuk membuat antarmuka pengguna yang estetis dan informatif.",
-                      ),
-                    ],
+                    fontSize: 30,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 3,
-                    fit: FlexFit.loose,
-                    child: Container(
-                      padding: const EdgeInsets.all(17.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18.0),
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFFF8C00), Color(0xFFFF2D55)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                homeController.homeModel.value.nearestEvent != null
+                    ? Container(
+                        margin: const EdgeInsets.all(8.0),
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18.0),
+                          image: homeController
+                                      .homeModel.value.nearestEvent?.imageUrl !=
+                                  null
+                              ? DecorationImage(
+                                  image: NetworkImage(homeController
+                                      .homeModel.value.nearestEvent!.imageUrl!),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
                         ),
+                      )
+                    : const CardItemShimmer(),
+                Container(
+                  margin: const EdgeInsets.all(8.0),
+                  child: Text.rich(
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    TextSpan(
+                      style: const TextStyle(
+                        fontSize: 16.0,
                       ),
-                      child: CountdownTimer(
-                        targetDate: targetDate,
-                      ),
+                      children: <TextSpan>[
+                        homeController.homeModel.value.nearestEvent != null
+                            ? const TextSpan(
+                                text: "Berlokasi di ",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              )
+                            : const TextSpan(text: ""),
+                        TextSpan(
+                          text: homeController
+                                  .homeModel.value.nearestEvent?.location ??
+                              "",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              "\n\n\t\t\t\t\t ${homeController.homeModel.value.nearestEvent?.description ?? ""}",
+                        ),
+                      ],
                     ),
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(12, 74),
-                        backgroundColor: const Color(0XFF10A7E8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      fit: FlexFit.loose,
+                      child: Container(
+                        padding: const EdgeInsets.all(17.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18.0),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFFF8C00), Color(0xFFFF2D55)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                         ),
-                        padding: const EdgeInsets.all(6.0),
-                      ),
-                      child: const Text(
-                        "JOIN\nnow!",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w900),
+                        child: homeController.homeModel.value.nearestEvent !=
+                                null
+                            ? CountdownTimer(
+                                targetDate: DateTime.fromMillisecondsSinceEpoch(
+                                    homeController
+                                            .homeModel.value.nearestEventTime! *
+                                        1000,
+                                    isUtc: true),
+                              )
+                            : CountdownTimer(targetDate: targetDate),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    Flexible(
+                      flex: 1,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(12, 74),
+                          backgroundColor: const Color(0XFF10A7E8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: const EdgeInsets.all(6.0),
+                        ),
+                        child: const Text(
+                          "JOIN\nnow!",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ],
@@ -171,6 +191,7 @@ class CountdownTimer extends StatefulWidget {
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
+  HomeController homeController = Get.find<HomeController>();
   late Timer _timer;
   CountdownTime _countdownTime =
       CountdownTime(days: 0, hours: 0, minutes: 0, seconds: 0);
@@ -186,6 +207,8 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   void _updateTime() {
     setState(() {
+      if (homeController.homeModel.value.nearestEvent == null) return;
+
       _countdownTime =
           _calculateCountdownTime(widget.targetDate.difference(DateTime.now()));
     });
@@ -253,6 +276,31 @@ class CountdownPart extends StatelessWidget {
           style: const TextStyle(fontSize: 13, color: Colors.black),
         ),
       ],
+    );
+  }
+}
+
+// make card item shimmer from above code card
+class CardItemShimmer extends StatelessWidget {
+  const CardItemShimmer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Container(
+          height: 180.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.grey[300],
+          ),
+        ),
+      ),
     );
   }
 }
