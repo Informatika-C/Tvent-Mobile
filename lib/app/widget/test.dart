@@ -297,3 +297,196 @@
 //                 ),
 //               ),
 //             ),
+
+            // Obx(
+            //   () => Column(
+            //     children: List.generate(
+            //       EvC.DataKategoriEvents.length,
+            //       (index) => InkWell(
+            //         onTap: () {
+            //           EvC.GetDetailEvent(
+            //                   "${EvC.DataKategoriEvents[index]['id']}")
+            //               .then(
+            //             (value) => Get.to(() => Details()),
+            //           );
+            //         },
+            //         child: Container(
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(15),
+            //             color: Colors.white,
+            //           ),
+            //           clipBehavior: Clip.antiAlias,
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Image.network(
+            //                 "https://tvent.azurewebsites.net/storage/banner/${EvC.DataKategoriEvents[index]['id']}/${EvC.DataKategoriEvents[index]['banner']}",
+            //               ),
+            //               Padding(
+            //                 padding: EdgeInsets.all(10),
+            //                 child: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     Text(
+            //                       EvC.DataKategoriEvents[index]['nama_event'],
+            //                       style: TextStyle(
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 16,
+            //                         color:
+            //                             Theme.of(context).colorScheme.primary,
+            //                       ),
+            //                     ),
+            //                     Text(
+            //                       EvC.DataKategoriEvents[index]['deskripsi'],
+            //                       style: TextStyle(
+            //                         color:
+            //                             Theme.of(context).colorScheme.primary,
+            //                       ),
+            //                     ),
+            //                     SizedBox(
+            //                       height: 15,
+            //                     ),
+            //                     Row(
+            //                       children: [
+            //                         Image.network(
+            //                           "https://tvent.azurewebsites.net/storage/penyelenggara/logo/${EvC.DataKategoriEvents[index]['penyelenggara']['id']}/${EvC.DataKategoriEvents[index]['penyelenggara']['logo']}",
+            //                           width: 30,
+            //                           height: 30,
+            //                         ),
+            //                         SizedBox(
+            //                           width: 10,
+            //                         ),
+            //                         Column(
+            //                           crossAxisAlignment:
+            //                               CrossAxisAlignment.start,
+            //                           children: [
+            //                             Text(
+            //                               EvC.DataKategoriEvents[index]
+            //                                       ['penyelenggara']
+            //                                   ['nama_penyelenggara'],
+            //                               style: TextStyle(
+            //                                 color: Theme.of(context)
+            //                                     .colorScheme
+            //                                     .primary,
+            //                               ),
+            //                             ),
+            //                             Text(
+            //                               EvC.DataKategoriEvents[index]
+            //                                   ['tempat'],
+            //                               style: TextStyle(
+            //                                 color: Theme.of(context)
+            //                                     .colorScheme
+            //                                     .primary,
+            //                               ),
+            //                             ),
+            //                           ],
+            //                         )
+            //                       ],
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+
+
+
+            // Obx(
+            //   () => Column(
+            //     children: List.generate(
+            //       EvC.dataKategoriEvents.length,
+            //       (index) {
+            //         final DataKategoriEvent eventData =
+            //             EvC.dataKategoriEvents[index];
+
+            //         return InkWell(
+            //           onTap: () {
+            //             EvC.GetDetailEvent("${eventData.id}").then(
+            //               (value) => Get.to(() => Details()),
+            //             );
+            //           },
+            //           child: Card(
+            //             elevation: 3,
+            //             margin: EdgeInsets.all(10),
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Image.network(
+            //                   eventData.getBannerUrl(),
+            //                   height: 150,
+            //                   width: double.infinity,
+            //                   fit: BoxFit.cover,
+            //                 ),
+            //                 Padding(
+            //                   padding: EdgeInsets.all(10),
+            //                   child: Column(
+            //                     crossAxisAlignment: CrossAxisAlignment.start,
+            //                     children: [
+            //                       Text(
+            //                         eventData.namaEvent,
+            //                         style: TextStyle(
+            //                           fontWeight: FontWeight.bold,
+            //                           fontSize: 16,
+            //                           color:
+            //                               Theme.of(context).colorScheme.primary,
+            //                         ),
+            //                       ),
+            //                       Text(
+            //                         eventData.deskripsi,
+            //                         style: TextStyle(
+            //                           color:
+            //                               Theme.of(context).colorScheme.primary,
+            //                         ),
+            //                       ),
+            //                       SizedBox(height: 15),
+            //                       Row(
+            //                         children: [
+            //                           Image.network(
+            //                             EvC.getBannerUrl(
+            //                                 eventData.id, eventData.banner),
+            //                             width: 30,
+            //                             height: 30,
+            //                           ),
+            //                           SizedBox(width: 10),
+            //                           Column(
+            //                             crossAxisAlignment:
+            //                                 CrossAxisAlignment.start,
+            //                             children: [
+            //                               Text(
+            //                                 eventData.penyelenggara[
+            //                                     'nama_penyelenggara'],
+            //                                 style: TextStyle(
+            //                                   color: Theme.of(context)
+            //                                       .colorScheme
+            //                                       .primary,
+            //                                 ),
+            //                               ),
+            //                               Text(
+            //                                 eventData.tempat,
+            //                                 style: TextStyle(
+            //                                   color: Theme.of(context)
+            //                                       .colorScheme
+            //                                       .primary,
+            //                                 ),
+            //                               ),
+            //                             ],
+            //                           )
+            //                         ],
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
