@@ -1,17 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tvent/app/modules/home/models/category_model.dart';
 import 'package:tvent/app/modules/home/models/event_model.dart';
+import '../../../../services/auth_services.dart';
 
 class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();
   RxBool isTitleVisible = true.obs;
   var selectedIndex = 0.obs;
   var itemCount = 10.obs;
+  final user = Get.find<AuthServices>().user;
 
   final List<String> textItems = [
     'Unlock Your Potential!',
@@ -60,10 +59,8 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
     scrollController.addListener(() {
       final double offset = scrollController.offset;
-      // Sesuaikan logika berdasarkan posisi scroll yang diinginkan
       isTitleVisible.value = offset < 100.0;
     });
   }

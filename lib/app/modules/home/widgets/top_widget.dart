@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
-import 'package:tvent/services/auth_services.dart';
 
 class TopWidget extends StatelessWidget {
   final List<String> textItems;
   final HomeController homeController = Get.find();
-  AuthServices authServices = Get.find<AuthServices>();
 
-  TopWidget({Key? key, required this.textItems}) : super(key: key);
+  TopWidget({super.key, required this.textItems});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +18,9 @@ class TopWidget extends StatelessWidget {
         children: [
           buildAppBar(context),
           TopWidgetSlider(textItems: textItems),
-          const Divider(
+          Divider(
             thickness: 2,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.inverseSurface,
           ),
         ],
       ),
@@ -39,46 +37,53 @@ class TopWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Obx(
-              () => Text.rich(
-                TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: [
-                    TextSpan(
-                      text: "Hi! Welcome ",
-                      style: TextStyle(
+              () => Expanded(
+                flex: 1,
+                child: Text.rich(
+                  TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: [
+                      TextSpan(
+                        text: "Hi! Welcome ",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      TextSpan(
+                        text: homeController.user.value?.name ?? "Guest",
+                        style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    TextSpan(
-                      text: authServices.user.value?.name ?? "Guest",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w800,
+                          overflow: TextOverflow.clip,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: "\n$formattedDate",
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 104, 102, 102),
-                        fontSize: 12,
+                      TextSpan(
+                        text: "\n$formattedDate",
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 104, 102, 102),
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: const Icon(
-                Icons.person,
-                color: Colors.black,
-                size: 40,
+            Expanded(
+              flex: 0,
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.black,
+                  size: 40,
+                ),
               ),
             ),
           ],
@@ -97,15 +102,15 @@ class TopWidgetSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
+      disableGesture: true,
       options: CarouselOptions(
         height: 30,
         viewportFraction: 1.0,
         scrollDirection: Axis.vertical,
         autoPlay: true,
+        scrollPhysics: const NeverScrollableScrollPhysics(),
         autoPlayInterval: const Duration(seconds: 3),
         autoPlayAnimationDuration: const Duration(milliseconds: 800),
-        pauseAutoPlayOnTouch: true,
-        enlargeCenterPage: false,
       ),
       itemCount: textItems.length,
       itemBuilder: (context, index, realIndex) {
