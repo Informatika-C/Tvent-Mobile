@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CarouselImageWidget extends StatelessWidget {
   final HomeController homeController = Get.find();
@@ -10,12 +11,17 @@ class CarouselImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var images = homeController.carouselImages;
+    final homeModel = homeController.homeModel;
 
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
-      child: Carousel(
-        images: images,
+      child: Obx(
+        () => homeModel.value.popularEvents != null
+            ? Carousel(
+                images: homeModel.value.popularEvents!
+                    .map((e) => e.imageUrl!)
+                    .toList())
+            : ShimmerCarousel(),
       ),
     );
   }
@@ -36,6 +42,34 @@ class Carousel extends StatelessWidget {
           width: double.infinity,
         );
       }).toList(),
+      options: CarouselOptions(
+        height: 50.0,
+        viewportFraction: 0.3,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 2),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+        autoPlayCurve: Curves.easeOutSine,
+        scrollPhysics: const NeverScrollableScrollPhysics(),
+      ),
+    );
+  }
+}
+
+class ShimmerCarousel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          .map<Widget>((_) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: double.infinity,
+                  height: 50.0,
+                  color: Colors.white,
+                ),
+              ))
+          .toList(),
       options: CarouselOptions(
         height: 50.0,
         viewportFraction: 0.3,

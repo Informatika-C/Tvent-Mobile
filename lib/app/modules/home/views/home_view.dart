@@ -26,7 +26,7 @@ class HomeView extends GetView<HomeController> {
             CardList(),
             CategoryWidget(),
             CountdownTimerWidget(
-              targetDate: DateTime.now().add(const Duration(days: 5)),
+              targetDate: DateTime.now().add(const Duration(days: 0)),
             ),
             CarouselImageWidget(),
             EventCarousel(),
