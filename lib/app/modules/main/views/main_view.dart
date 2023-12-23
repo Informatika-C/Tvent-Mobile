@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/widget/drawer.dart';
+import 'package:tvent/app/widget/overlay.dart';
 import '../../../routes/app_nav.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/main_controller.dart';
@@ -25,13 +26,22 @@ class MainView extends GetView<MainController> {
           return Text(NavPages.titles[currentIndex]);
         }),
         centerTitle: true,
-        // leading: const Icon(FontAwesomeIcons.diceD20),
         leading: IconButton(
           icon: const Icon(FontAwesomeIcons.diceD20),
           onPressed: () {
             _scaffoldKey.currentState?.openDrawer();
           },
         ),
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return CustomPopupMenu(
+                currentIndex: controller.selctedIndex.value,
+                controller: controller,
+              );
+            },
+          ),
+        ],
         flexibleSpace: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 20),
@@ -41,6 +51,7 @@ class MainView extends GetView<MainController> {
           ),
         ),
       ),
+
       backgroundColor: Theme.of(context).colorScheme.background,
       // body: Obx(() => controller.widgetOption.elementAt(controller.selctedIndex.value)),
       body: createPageView(controller),
@@ -79,7 +90,6 @@ Obx createBottombar(MainController controller, BuildContext context) {
           borderRadius: 26,
           paddingR: const EdgeInsets.all(2),
           outlineBorderColor: const Color(0xfff2f2f2),
-          // outlineBorderColor: Theme.of(context).colorScheme.primary,
           currentIndex: controller.selctedIndex.value,
           onTap: controller.onItemTapped,
           items: NavPages.navBar,
