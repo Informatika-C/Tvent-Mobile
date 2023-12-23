@@ -21,9 +21,15 @@ class MainView extends GetView<MainController> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Theme.of(context).colorScheme.primary,
         title: Obx(() {
           final int currentIndex = controller.selctedIndex.value;
-          return Text(NavPages.titles[currentIndex]);
+          return Text(
+            NavPages.titles[currentIndex],
+            style: const TextStyle(fontWeight: FontWeight.w900),
+          );
         }),
         centerTitle: true,
         leading: IconButton(
@@ -42,18 +48,17 @@ class MainView extends GetView<MainController> {
             },
           ),
         ],
-        flexibleSpace: ClipRect(
+        flexibleSpace: ClipRRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 20),
+            filter: ImageFilter.blur(
+                sigmaX: 35, sigmaY: 50, tileMode: TileMode.decal),
             child: Container(
               color: Colors.transparent,
             ),
           ),
         ),
       ),
-
       backgroundColor: Theme.of(context).colorScheme.background,
-      // body: Obx(() => controller.widgetOption.elementAt(controller.selctedIndex.value)),
       body: createPageView(controller),
       bottomNavigationBar: createBottombar(controller, context),
       drawerEnableOpenDragGesture: true,

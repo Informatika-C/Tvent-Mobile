@@ -37,46 +37,53 @@ class TopWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Obx(
-              () => Text.rich(
-                TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: [
-                    TextSpan(
-                      text: "Hi! Welcome ",
-                      style: TextStyle(
+              () => Expanded(
+                flex: 1,
+                child: Text.rich(
+                  TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: [
+                      TextSpan(
+                        text: "Hi! Welcome ",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      TextSpan(
+                        text: homeController.user.value?.name ?? "Guest",
+                        style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    TextSpan(
-                      text: homeController.user.value?.name ?? "Guest",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w800,
+                          overflow: TextOverflow.clip,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: "\n$formattedDate",
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 104, 102, 102),
-                        fontSize: 12,
+                      TextSpan(
+                        text: "\n$formattedDate",
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 104, 102, 102),
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: const Icon(
-                Icons.person,
-                color: Colors.black,
-                size: 40,
+            Expanded(
+              flex: 0,
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.black,
+                  size: 40,
+                ),
               ),
             ),
           ],

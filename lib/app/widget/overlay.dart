@@ -26,14 +26,12 @@ class CustomPopupMenu extends StatelessWidget {
         return buildPopupMenuItems(context, controller.selctedIndex.value);
       },
       offset: const Offset(0, 60),
-      icon: const Icon(
-        FontAwesomeIcons.ellipsisVertical,
-        color: Color(0xfff2f2f2),
-      ),
+      icon: const Icon(FontAwesomeIcons.ellipsisVertical),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      color: Theme.of(context).colorScheme.background,
+      // color: Theme.of(context).colorScheme.tertiary,
+      elevation: 5,
     );
   }
 
