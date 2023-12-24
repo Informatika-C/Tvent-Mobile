@@ -10,6 +10,7 @@ class EventController extends GetxController {
   final dio = Dio();
   RxString choseKategori = "Sport".obs;
   RxList<DataKategoriEvent> dataKategoriEvents = <DataKategoriEvent>[].obs;
+  RxBool isLoading = true.obs;
   RxList<Map<String, dynamic>> categories = <Map<String, dynamic>>[
     {'value': 'Sport', 'icon': FontAwesomeIcons.trophy, 'label': 'Sports'},
     {
@@ -24,7 +25,6 @@ class EventController extends GetxController {
     },
     {'value': 'Art', 'icon': FontAwesomeIcons.palette, 'label': 'Art'},
   ].obs;
-  RxBool isLoading = true.obs;
 
   String getBannerUrl(int id, String banner) {
     return '$HOST_SERVER/storage/banner/$id/$banner';
@@ -68,18 +68,38 @@ class EventController extends GetxController {
     return print("GetDetailEvent");
   }
 
+  // var DetailLomba = {};
+  // Future GetDetailLomba(String uri) async {
+  //   final response = await dio.get(
+  //     "$HOST_SERVER/api/lomba/detail/" + uri,
+  //   );
+  //   DetailLomba = response.data;
+  //   return print(DetailLomba);
+  // }
   var DetailLomba = {};
-  Future GetDetailLomba(String uri) async {
-    final response = await dio.get(
-      "$HOST_SERVER/api/lomba/detail/" + uri,
-    );
-    DetailLomba = response.data;
-    return print(DetailLomba);
+  Future<void> GetDetailLomba(String uri) async {
+    try {
+      final response = await dio.get(
+        "$HOST_SERVER/api/lomba/detail/$uri",
+      );
+
+      if (response.statusCode == 200) {
+        DetailLomba = response.data;
+        print(DetailLomba);
+      } else {
+        print("Failed to get data. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("Error during API call: $error");
+    }
   }
 
   final namaGroup = TextEditingController();
   final cariKetua = TextEditingController();
   final cariAnggota = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  List<TextEditingController> cariAnggotaControllers = [];
   RxList<dynamic> ketuaCombox = [].obs;
   RxList<dynamic> PesertaCombox = [].obs;
   void clearSet() {
