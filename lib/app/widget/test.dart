@@ -490,3 +490,178 @@
             //     ),
             //   ),
             // ),
+
+
+             // Column(
+                    //   children: List.generate(
+                    //     evC.DetailLomba['max_anggota'],
+                    //     (index) => Column(
+                    //       children: [
+                    //         TextField(
+                    //           controller: cariAnggotaControllers[index],
+                    //           onChanged: (value) async {
+                    //             // Use await to get the result of GetUsers
+                    //             var result = await evC.GetUsers(value);
+                    //             result.removeWhere(
+                    //               (element) =>
+                    //                   element['name'] == evC.cariKetua.text,
+                    //             );
+                    //             // Use assign instead of setValue
+                    //             evC.PesertaCombox[index].assign(result);
+                    //             if (cariAnggotaControllers[index].text == "") {
+                    //               evC.PesertaCombox[index].clear();
+                    //             }
+                    //           },
+                    //           decoration: InputDecoration(
+                    //             label: Text("Cari Anggota ${index + 1}"),
+                    //             border: OutlineInputBorder(),
+                    //           ),
+                    //         ),
+                    //         if (evC.PesertaCombox.length > index)
+                    //           Obx(
+                    //             () => Visibility(
+                    //               visible: evC.PesertaCombox[index].isNotEmpty,
+                    //               child: Container(
+                    //                 height: 110,
+                    //                 decoration: BoxDecoration(
+                    //                   border: Border.all(
+                    //                     color: Colors.grey,
+                    //                     width: 1,
+                    //                   ),
+                    //                 ),
+                    //                 child: Obx(
+                    //                   () => ListView(
+                    //                     children: List.generate(
+                    //                       evC.PesertaCombox.length,
+                    //                       (index) {
+                    //                         return Obx(
+                    //                           () => ListTile(
+                    //                             onTap: () {
+                    //                               evC.cariAnggota.text =
+                    //                                   "${evC.PesertaCombox[index]['name']}";
+                    //                               evC.PesertaCombox.clear();
+                    //                             },
+                    //                             title: Text(
+                    //                               evC.PesertaCombox.isNotEmpty
+                    //                                   ? "${evC.PesertaCombox[index]['name']}"
+                    //                                   : "",
+                    //                             ),
+                    //                           ),
+                    //                         );
+                    //                       },
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         SizedBox(height: 10),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // TextField(
+                    //   controller: evC.cariAnggota,
+                    //   onChanged: (value) {
+                    //     evC.GetUsers(value).then((value) {
+                    //       value.removeWhere((element) =>
+                    //           element['name'] == evC.cariKetua.text);
+                    //       evC.PesertaCombox.value = value;
+                    //     });
+                    //     if (evC.cariAnggota.text == "") {
+                    //       evC.PesertaCombox.clear();
+                    //     }
+                    //   },
+                    //   decoration: InputDecoration(
+                    //     label: Text("Cari Anggota"),
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    // ),
+                    // Obx(
+                    //   () => Visibility(
+                    //     visible: evC.PesertaCombox.isNotEmpty,
+                    //     child: Container(
+                    //       height: 110,
+                    //       decoration: BoxDecoration(
+                    //           border: Border.all(
+                    //         color: Colors.grey,
+                    //         width: 1,
+                    //       )),
+                    //       child: Obx(
+                    //         () => ListView(
+                    //           children: List.generate(
+                    //             evC.PesertaCombox.length,
+                    //             (index) {
+                    //               return Obx(
+                    //                 () => ListTile(
+                    //                   onTap: () {
+                    //                     evC.cariAnggota.text =
+                    //                         "${evC.PesertaCombox[index]['name']}";
+                    //                     evC.PesertaCombox.clear();
+                    //                   },
+                    //                   title: Text(
+                    //                     evC.PesertaCombox.isNotEmpty
+                    //                         ? "${evC.PesertaCombox[index]['name']}"
+                    //                         : "",
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             },
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
+                                        // TextField(
+                    //   controller: evC.cariKetua,
+                    //   onChanged: (value) {
+                    //     evC.GetUsers(value).then(
+                    //       (value) => {
+                    //         evC.ketuaCombox.value = value,
+                    //       },
+                    //     );
+                    //   },
+                    //   decoration: InputDecoration(
+                    //     label: Text("Cari Anggota/Ketua"),
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    // ),
+                    // Obx(
+                    //   () => Visibility(
+                    //     visible: evC.ketuaCombox.isNotEmpty,
+                    //     child: Container(
+                    //       height: 110,
+                    //       decoration: BoxDecoration(
+                    //           border: Border.all(
+                    //         color: Colors.grey,
+                    //         width: 1,
+                    //       )),
+                    //       child: Obx(
+                    //         () => ListView(
+                    //           children: List.generate(
+                    //             evC.ketuaCombox.length,
+                    //             (index) {
+                    //               return Obx(
+                    //                 () => ListTile(
+                    //                   onTap: () {
+                    //                     evC.cariKetua.text =
+                    //                         "${evC.ketuaCombox[index]['name']}";
+                    //                     evC.ketuaCombox.clear();
+                    //                   },
+                    //                   title: Text(
+                    //                     evC.ketuaCombox.isNotEmpty
+                    //                         ? "${evC.ketuaCombox[index]['name']}"
+                    //                         : "",
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             },
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),

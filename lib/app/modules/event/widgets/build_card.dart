@@ -38,7 +38,11 @@ class EventCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         evC.GetDetailEvent("${eventData.id}").then(
-          (value) => Get.to(() => const Details()),
+          (value) => Get.to(
+            () => Details(
+              showDetailLomba: (BuildContext context) {},
+            ),
+          ),
         );
       },
       child: Card(

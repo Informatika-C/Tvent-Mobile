@@ -33,8 +33,9 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     Widget login = Container(
+      width: MediaQuery.of(context).size.width / 2,
       padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 2.0),
-      width: double.infinity,
+      // width: double.infinity,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage("assets/images/polygons.png"),
