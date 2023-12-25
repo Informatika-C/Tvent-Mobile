@@ -109,7 +109,7 @@ class EventCard extends StatelessWidget {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(17.0)),
-              child: homeController.homeModel.value.popularEvents != null
+              child: event.bannerUrl != null
                   ? Image.network(
                       event.bannerUrl ?? '',
                       height: 120.0,
@@ -149,7 +149,7 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 4.0),
                   Row(
                     children: [
-                      homeController.homeModel.value.popularEvents != null
+                      event.organizerImg != null
                           ? Image.network(
                               event.organizerImg ?? '',
                               height: 30.0,
