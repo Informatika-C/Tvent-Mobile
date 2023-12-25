@@ -1,42 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tvent/app/modules/event/controllers/event_controller.dart';
+import 'package:tvent/app/modules/event/controllers/event_detail_controller.dart';
 
 class EventDetailsWidget extends StatelessWidget {
-  final EventController evC;
+  final EventDetailController eventDetailController = Get.find();
 
-  EventDetailsWidget({required this.evC});
+  EventDetailsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          EventDetailRow(
-            icon: FontAwesomeIcons.calendarCheck,
-            text: _formatDate(evC.DataDetailEvents['tanggal_pendaftaran']),
-          ),
-          const SizedBox(height: 5),
-          EventDetailRow(
-            icon: FontAwesomeIcons.calendarXmark,
-            text: _formatDate(
-                evC.DataDetailEvents['tanggal_penutupan_pendaftaran']),
-          ),
-          const SizedBox(height: 5),
-          EventDetailRow(
-            icon: FontAwesomeIcons.fire,
-            text: _formatDate(evC.DataDetailEvents['tanggal_pelaksanaan']),
-          ),
-          const SizedBox(height: 5),
-          EventDetailRow(
-            icon: FontAwesomeIcons.locationDot,
-            text: evC.DataDetailEvents['tempat'],
-          ),
-        ],
+      child: Obx(
+        () => Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            EventDetailRow(
+              icon: FontAwesomeIcons.calendarCheck,
+              // text: _formatDate(
+              //     eventDetailController.event.value.registerDate.toString()),
+              text: _formatDate(eventDetailController.event.value.registerDate
+                      ?.toString()
+                      .split(' ')[0] ??
+                  ""),
+            ),
+            const SizedBox(height: 5),
+            EventDetailRow(
+              icon: FontAwesomeIcons.calendarXmark,
+              // text: _formatDate(
+              //     eventDetailController.event.value.closeRegisterDate.toString()),
+              text: _formatDate(eventDetailController
+                      .event.value.closeRegisterDate
+                      ?.toString()
+                      .split(' ')[0] ??
+                  ""),
+            ),
+            const SizedBox(height: 5),
+            EventDetailRow(
+              icon: FontAwesomeIcons.fire,
+              // text: _formatDate(
+              //     eventDetailController.event.value.startDate.toString()),
+              text: _formatDate(eventDetailController.event.value.startDate
+                      ?.toString()
+                      .split(' ')[0] ??
+                  ""),
+            ),
+            const SizedBox(height: 5),
+            EventDetailRow(
+              icon: FontAwesomeIcons.locationDot,
+              text: eventDetailController.event.value.location ?? "",
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -75,6 +93,7 @@ class EventDetailRow extends StatelessWidget {
 }
 
 String _formatDate(String dateString) {
+  if (dateString == "") return "";
   final inputFormat = DateFormat("yyyy-MM-dd");
   final outputFormat = DateFormat("dd MMMM yyyy");
   final DateTime dateTime = inputFormat.parse(dateString);

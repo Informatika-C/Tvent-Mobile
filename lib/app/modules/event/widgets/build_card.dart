@@ -41,14 +41,18 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        eventController.GetDetailEvent("${event.id}").then(
-          (value) => Get.to(
-            () => Details(
-              showDetailLomba: (BuildContext context) {},
-            ),
-          ),
+      onTap: () async {
+        if (event.id == null) {
+          Get.snackbar("Error", "Event id is null");
+        }
+        Get.generalDialog(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return Details(
+              id: event.id ?? -1,
+            );
+          },
         );
+        // await eventController.GetDetailEvent("${event.id}");
       },
       child: Card(
         elevation: 3,

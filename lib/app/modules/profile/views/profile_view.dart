@@ -251,7 +251,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  List<Widget> gridChildren(List<Lomba?> lomba) {
+  List<Widget> gridChildren(List<LombaModel?> lomba) {
     if (controller.isLoading.value) {
       return [
         Center(
@@ -274,7 +274,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget buildCardView(Lomba? lomba) {
+  Widget buildCardView(LombaModel? lomba) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -306,7 +306,7 @@ class _ProfileViewState extends State<ProfileView> {
               Text(
                 lomba?.date != null
                     ? DateFormat('EEEE, dd MMMM yyyy HH:mm:ss')
-                        .format(DateTime.parse(lomba!.date))
+                        .format(DateTime.parse(lomba?.date ?? ''))
                     : '',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -322,7 +322,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget buildListView(Lomba? lomba) {
+  Widget buildListView(LombaModel? lomba) {
     bool isExpanded = controller.expansionStates[lomba?.id ?? -1] ?? false;
 
     return Column(
@@ -367,7 +367,7 @@ class _ProfileViewState extends State<ProfileView> {
                 : Text(
                     lomba?.date != null
                         ? DateFormat('EEEE, dd MMMM yyyy HH:mm:ss')
-                            .format(DateTime.parse(lomba!.date))
+                            .format(DateTime.parse(lomba?.date ?? ''))
                         : '',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
@@ -449,7 +449,8 @@ class _ProfileViewState extends State<ProfileView> {
                               Text(
                                 lomba?.date != null
                                     ? DateFormat('EEEE, dd MMMM yyyy HH:mm:ss')
-                                        .format(DateTime.parse(lomba!.date))
+                                        .format(
+                                            DateTime.parse(lomba?.date ?? ''))
                                     : '',
                               ),
                               Text(lomba?.price.toString() ?? ''),

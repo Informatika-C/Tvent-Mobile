@@ -71,9 +71,11 @@ class EventView extends GetView<EventController> {
           const SizedBox(height: 3.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Obx(() => eventController.isLoading.value
-                ? ShimmerLoadingWidget()
-                : EventListWidget()),
+            child: Obx(
+              () => eventController.isLoading.value
+                  ? ShimmerLoadingWidget()
+                  : EventListWidget(),
+            ),
           ),
         ],
       ),
