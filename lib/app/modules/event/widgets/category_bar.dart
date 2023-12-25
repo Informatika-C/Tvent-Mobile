@@ -83,7 +83,6 @@ class CategoryBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 15),
         ],
       ),
     );

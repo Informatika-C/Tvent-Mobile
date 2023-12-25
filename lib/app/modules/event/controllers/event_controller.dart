@@ -20,7 +20,7 @@ class EventController extends GetxController {
     },
     {
       'value': 'Programming',
-      'icon': FontAwesomeIcons.laptopCode,
+      'icon': FontAwesomeIcons.bug,
       'label': 'Programming'
     },
     {'value': 'Art', 'icon': FontAwesomeIcons.palette, 'label': 'Art'},

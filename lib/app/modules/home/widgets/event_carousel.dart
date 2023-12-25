@@ -154,7 +154,7 @@ class EventCard extends StatelessWidget {
                               event.authorsImg ?? '',
                               height: 30.0,
                               width: 30.0,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             )
                           : Container(
                               height: 30.0,
@@ -163,6 +163,8 @@ class EventCard extends StatelessWidget {
                             ),
                       Text(
                         '\t${event.organizer ?? ''}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 15.0, fontWeight: FontWeight.w700),
                       ),

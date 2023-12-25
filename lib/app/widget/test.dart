@@ -665,3 +665,53 @@
                     //     ),
                     //   ),
                     // ),
+
+                        // InkWell(
+                        //   onTap: () {
+                        //   },
+                        //   child: Obx(
+                        //     () => Container(
+                        //       // height: 50,
+                        //       padding: const EdgeInsets.all(15),
+                        //       decoration: BoxDecoration(
+                        //         color: const Color(0xfff2f2f2),
+                        //         border: Border.all(
+                        //           color: Colors.transparent,
+                        //           width: 0,
+                        //         ),
+                        //         borderRadius: BorderRadius.circular(15),
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //             color:
+                        //                 const Color.fromARGB(255, 192, 187, 187)
+                        //                     .withOpacity(1),
+                        //             offset: const Offset(0, 5),
+                        //             blurRadius: 3,
+                        //             spreadRadius: -4,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       child: evC.isLoading.value
+                        //           ? ShimmerCategoryCard()
+                        //           : Row(
+                        //               children: [
+                        //                 Icon(
+                        //                   Icons.abc,
+                        //                   color: const Color(0XFF1E2126),
+                        //                   size: 17,
+                        //                 ),
+                        //                 const SizedBox(width: 10),
+                        //                 Text(
+                        //                   'test',
+                        //                   style: TextStyle(
+                        //                     color: Theme.of(context)
+                        //                         .colorScheme
+                        //                         .tertiary,
+                        //                     fontWeight: FontWeight.w300,
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //     ),
+                        //   ),
+                        // ),
