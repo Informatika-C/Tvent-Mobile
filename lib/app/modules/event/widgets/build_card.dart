@@ -1,43 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tvent/app/models/event_model.dart';
 import 'package:tvent/app/models/event_models.dart';
 import 'package:tvent/app/modules/event/controllers/event_controller.dart';
 import 'package:tvent/app/modules/event/views/event_details_view.dart';
 
 class EventListWidget extends StatelessWidget {
-  final EventController evC = Get.put(EventController());
+  final EventController eventController = Get.put(EventController());
+
+  EventListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        evC.dataKategoriEvents.length,
-        (index) {
-          final DataKategoriEvent eventData = evC.dataKategoriEvents[index];
+    return Obx(
+      () => Column(
+        children: List.generate(
+          eventController.events.length,
+          (index) {
+            final EventModel eventData = eventController.events[index];
 
-          return Column(
-            children: [
-              EventCard(eventData: eventData),
-              const SizedBox(height: 6),
-            ],
-          );
-        },
+            return Column(
+              children: [
+                EventCard(event: eventData),
+                const SizedBox(height: 6),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 }
 
 class EventCard extends StatelessWidget {
-  final DataKategoriEvent eventData;
-  final EventController evC = Get.find();
+  final EventController eventController = Get.find();
+  final EventModel event;
 
-  EventCard({required this.eventData});
+  EventCard({required this.event});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        evC.GetDetailEvent("${eventData.id}").then(
+        eventController.GetDetailEvent("${event.id}").then(
           (value) => Get.to(
             () => Details(
               showDetailLomba: (BuildContext context) {},
@@ -57,12 +62,14 @@ class EventCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: Image.network(
-                eventData.getBannerUrl(),
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              child: event.bannerUrl != null
+                  ? Image.network(
+                      event.bannerUrl ?? "",
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -70,7 +77,7 @@ class EventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    eventData.namaEvent,
+                    event.name ?? "",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -78,7 +85,7 @@ class EventCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    eventData.deskripsi,
+                    event.description ?? "",
                     style: const TextStyle(
                       color: Color(0XFF1E2126),
                       overflow: TextOverflow.clip,
@@ -87,23 +94,25 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 5),
                   Row(
                     children: [
-                      Image.network(
-                        eventData.getPenyelenggaraLogoUrl(),
-                        width: 30,
-                        height: 30,
-                      ),
+                      event.organizerImg != null
+                          ? Image.network(
+                              event.organizerImg ?? "",
+                              width: 30,
+                              height: 30,
+                            )
+                          : const SizedBox(width: 30, height: 30),
                       const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            eventData.penyelenggara['nama_penyelenggara'],
+                            event.organizerName ?? "",
                             style: const TextStyle(
                               color: Color(0XFF1E2126),
                             ),
                           ),
                           Text(
-                            eventData.tempat,
+                            event.location ?? "",
                             style: const TextStyle(
                               color: Color(0XFF1E2126),
                             ),

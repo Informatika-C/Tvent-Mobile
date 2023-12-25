@@ -82,16 +82,17 @@ class CardItem extends StatelessWidget {
         height: 180.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          image: homeController.homeModel.value.newEvents?[index].imageUrl !=
-                  null
-              ? DecorationImage(
-                  image: NetworkImage(
-                    homeController.homeModel.value.newEvents?[index].imageUrl ??
-                        '',
-                  ),
-                  fit: BoxFit.cover,
-                )
-              : null,
+          image:
+              homeController.homeModel.value.newEvents?[index].bannerUrl != null
+                  ? DecorationImage(
+                      image: NetworkImage(
+                        homeController
+                                .homeModel.value.newEvents?[index].bannerUrl ??
+                            '',
+                      ),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
         ),
         child: Center(
           child: Text(

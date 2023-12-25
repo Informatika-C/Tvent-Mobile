@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/constant_variable.dart';
+import 'package:tvent/app/models/event_model.dart';
 import 'package:tvent/app/modules/home/models/category_model.dart';
-import 'package:tvent/app/modules/home/models/event_model.dart';
 import 'package:tvent/app/modules/home/models/home_model.dart';
 import 'package:tvent/app/routes/app_pages.dart';
 import 'package:tvent/services/auth_services.dart';
@@ -61,11 +61,11 @@ class HomeController extends GetxController {
       return EventModel(
         id: event["id"],
         name: event["nama_event"],
-        organizer: event["penyelenggara"]["nama_penyelenggara"],
+        organizerName: event["penyelenggara"]["nama_penyelenggara"],
         description: event["deskripsi"],
-        imageUrl: event["banner"],
+        bannerUrl: event["banner"],
         organizerId: event["penyelenggara"]["id"],
-        authorsImg: event["penyelenggara"]["logo"],
+        organizerImg: event["penyelenggara"]["logo"],
         location: event["tempat"],
       );
     }).toList();
@@ -73,11 +73,12 @@ class HomeController extends GetxController {
     EventModel nearestEvent = EventModel(
       id: data["nerest_event"]["id"],
       name: data["nerest_event"]["nama_event"],
-      organizer: data["nerest_event"]["penyelenggara"]["nama_penyelenggara"],
+      organizerName: data["nerest_event"]["penyelenggara"]
+          ["nama_penyelenggara"],
       description: data["nerest_event"]["deskripsi"],
-      imageUrl: data["nerest_event"]["banner"],
+      bannerUrl: data["nerest_event"]["banner"],
       organizerId: data["nerest_event"]["penyelenggara"]["id"],
-      authorsImg: data["nerest_event"]["penyelenggara"]["logo"],
+      organizerImg: data["nerest_event"]["penyelenggara"]["logo"],
       location: data["nerest_event"]["tempat"],
     );
 
