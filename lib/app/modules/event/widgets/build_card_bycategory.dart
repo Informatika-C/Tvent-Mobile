@@ -4,7 +4,7 @@ import 'package:tvent/app/models/event_models.dart';
 import 'package:tvent/app/modules/event/controllers/event_controller.dart';
 import 'package:tvent/app/modules/event/views/event_details_view.dart';
 
-class EventListWidget extends StatelessWidget {
+class BuildCardByCategory extends StatelessWidget {
   final EventController evC = Get.put(EventController());
 
   @override
@@ -79,6 +79,8 @@ class EventCard extends StatelessWidget {
                   ),
                   Text(
                     eventData.deskripsi,
+                    maxLines: 3,
+                    overflow: TextOverflow.fade,
                     style: const TextStyle(
                       color: Color(0XFF1E2126),
                       overflow: TextOverflow.clip,

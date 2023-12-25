@@ -96,6 +96,8 @@ class CardItem extends StatelessWidget {
         child: Center(
           child: Text(
             homeController.homeModel.value.newEvents?[index].name ?? '',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.clip,
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/event/widgets/dialog_register.dart';
+import 'package:tvent/app/widget/full_image.dart';
 
 import '../controllers/event_controller.dart';
 
@@ -326,27 +327,39 @@ class BottomSheetHelper {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 220,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(evC.DetailLomba['poster'] !=
-                                    null
-                                ? "https://tvent.azurewebsites.net/storage/lomba/poster/${evC.DetailLomba['id']}/${evC.DetailLomba['poster']}"
-                                : "https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png"),
-                            fit: BoxFit.fill),
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 0,
-                            blurRadius: 1,
-                            offset: const Offset(0, 2),
+                    InkWell(
+                      onTap: () {
+                        Get.to(
+                          () => FullScreenImage(
+                            imageUrls: [
+                              "https://tvent.azurewebsites.net/storage/lomba/poster/${evC.DetailLomba['id']}/${evC.DetailLomba['poster']}",
+                            ],
+                            initialIndex: 0,
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 220,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(evC.DetailLomba['poster'] !=
+                                      null
+                                  ? "https://tvent.azurewebsites.net/storage/lomba/poster/${evC.DetailLomba['id']}/${evC.DetailLomba['poster']}"
+                                  : "https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png"),
+                              fit: BoxFit.fill),
+                          borderRadius: BorderRadius.circular(
+                            15,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 0,
+                              blurRadius: 1,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(

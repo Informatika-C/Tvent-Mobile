@@ -21,7 +21,7 @@ class EventModel {
     this.location,
   }) {
     if (imageUrl != null && id != null) {
-      imageUrl = "$HOST_SERVER$imageUrl";
+      imageUrl = "$HOST_SERVER/storage/banner/$id/$imageUrl";
     }
     if (authorsImg != null && organizerId != null) {
       authorsImg =
