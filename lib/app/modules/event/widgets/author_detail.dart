@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tvent/app/modules/event/controllers/event_controller.dart';
+import 'package:tvent/app/modules/event/controllers/event_detail_controller.dart';
 
 class AuthorsDetail extends StatelessWidget {
-  final EventController evC = Get.find();
+  final EventDetailController eventDetailController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -23,38 +23,47 @@ class AuthorsDetail extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.all(9),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.network(
-            "https://tvent.azurewebsites.net/storage/penyelenggara/logo/${evC.DataDetailEvents['penyelenggara']['id']}/${evC.DataDetailEvents['penyelenggara']['logo']}",
-            width: 40,
-            height: 40,
-            colorBlendMode: BlendMode.colorBurn,
-          ),
-          const SizedBox(width: 7.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Penyelenggara",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
+      child: Obx(
+        () => Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            eventDetailController.event.value.organizerImg == null
+                ? const SizedBox(
+                    width: 40,
+                    height: 40,
+                  )
+                : Image.network(
+                    eventDetailController.event.value.organizerImg ?? "",
+                    width: 40,
+                    height: 40,
+                    colorBlendMode: BlendMode.colorBurn,
+                  ),
+            const SizedBox(width: 7.0),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  eventDetailController.event.value.organizerName != null
+                      ? "Penyelenggara"
+                      : "             ",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              Text(
-                "${evC.DataDetailEvents['penyelenggara']['nama_penyelenggara']}",
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                Text(
+                  eventDetailController.event.value.organizerName ?? "",
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

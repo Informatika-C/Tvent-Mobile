@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
-import '../models/event_model.dart';
+import 'package:tvent/app/models/event_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EventCarousel extends StatefulWidget {
@@ -109,9 +109,9 @@ class EventCard extends StatelessWidget {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(17.0)),
-              child: homeController.homeModel.value.popularEvents != null
+              child: event.bannerUrl != null
                   ? Image.network(
-                      event.imageUrl ?? '',
+                      event.bannerUrl ?? '',
                       height: 120.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -149,9 +149,9 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 4.0),
                   Row(
                     children: [
-                      homeController.homeModel.value.popularEvents != null
+                      event.organizerImg != null
                           ? Image.network(
-                              event.authorsImg ?? '',
+                              event.organizerImg ?? '',
                               height: 30.0,
                               width: 30.0,
                               fit: BoxFit.fill,
@@ -162,7 +162,7 @@ class EventCard extends StatelessWidget {
                               color: Colors.grey[300],
                             ),
                       Text(
-                        '\t${event.organizer ?? ''}',
+                        '\t${event.organizerName ?? ''}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

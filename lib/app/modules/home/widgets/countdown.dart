@@ -73,12 +73,12 @@ class CountdownTimerWidget extends StatelessWidget {
                         height: 200.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(18.0),
-                          image: homeController
-                                      .homeModel.value.nearestEvent?.imageUrl !=
+                          image: homeController.homeModel.value.nearestEvent
+                                      ?.bannerUrl !=
                                   null
                               ? DecorationImage(
-                                  image: NetworkImage(homeController
-                                      .homeModel.value.nearestEvent!.imageUrl!),
+                                  image: NetworkImage(homeController.homeModel
+                                      .value.nearestEvent!.bannerUrl!),
                                   fit: BoxFit.cover,
                                 )
                               : null,

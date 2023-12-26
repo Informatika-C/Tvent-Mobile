@@ -1,4 +1,4 @@
-import 'package:tvent/app/modules/home/models/event_model.dart';
+import 'package:tvent/app/models/event_model.dart';
 
 class HomeModel {
   List<EventModel>? newEvents = [];

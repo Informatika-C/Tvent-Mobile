@@ -61,21 +61,21 @@ class ProfileController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await Lomba.fetchUserListLomba();
+      final response = await LombaModel.fetchUserListLomba();
       List<dynamic> lombaJson = response.data;
 
-      List<Lomba> lomba = lombaJson
+      List<LombaModel> lomba = lombaJson
           .map(
-            (e) => Lomba(
-              e['id'],
-              e['nama_lomba'].toString(),
-              e['keterangan'].toString(),
-              e['pelaksanaan_lomba'].toString(),
-              e['poster'].toString(),
-              e['biaya_registrasi'],
-              e['kuota_lomba'],
-              e['max_anggota'],
-              e['ruangan_lomba'].toString(),
+            (e) => LombaModel(
+              id: e['id'],
+              name: e['nama_lomba'].toString(),
+              description: e['keterangan'].toString(),
+              date: e['pelaksanaan_lomba'].toString(),
+              poster: e['poster'].toString(),
+              price: e['biaya_registrasi'],
+              kuota: e['kuota_lomba'],
+              maxParticipantPerTeam: e['max_anggota'],
+              location: e['ruangan_lomba'].toString(),
             ),
           )
           .toList();
