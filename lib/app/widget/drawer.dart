@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/main/controllers/main_controller.dart';
 import 'package:tvent/app/routes/app_nav.dart';
+import 'package:tvent/app/routes/app_pages.dart';
 import 'package:tvent/services/theme_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -181,7 +182,7 @@ class AppDrawer extends StatelessWidget {
                           await authController
                               .logout(authController.user.value?.name ?? '');
                         } else {
-                          Get.toNamed('/auth');
+                          Get.toNamed(Routes.AUTH);
                         }
                       },
                     ),

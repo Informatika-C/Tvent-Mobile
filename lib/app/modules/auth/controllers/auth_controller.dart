@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/app/models/user_model.dart';
+import 'package:tvent/app/modules/main/controllers/main_controller.dart';
 import 'package:tvent/app/routes/app_pages.dart';
 import 'package:tvent/services/auth_services.dart';
 
@@ -154,7 +155,6 @@ class AuthController extends GetxController {
                   ElevatedButton(
                     onPressed: () async {
                       await performLogout();
-                      Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0XFFE67E22),
@@ -202,12 +202,35 @@ class AuthController extends GetxController {
 
   Future<void> performLogout() async {
     try {
-      await authServices.clearUser();
+      User? user = await authServices.getUser();
+      String? token = await authServices.getToken();
 
-      print("succes logout");
-      Get.offAllNamed(Routes.AUTH);
+      if (user == null && token == null) {
+        return;
+      }
+
+      Dio dio = Dio();
+      dio.options.headers['Authorization'] = 'Bearer $token';
+      await dio.post('$HOST_SERVER/api/logout');
+
+      await authServices.clearUser();
+      await authServices.removeToken();
+
+      Get.back();
+      Get.back();
+      MainController controller = Get.find<MainController>();
+      final PageController pageController = controller.pageController.value;
+      pageController.jumpToPage(0);
+
+      Get.toNamed(Routes.AUTH);
     } catch (error) {
-      print('An error occurred during logout: $error');
+      Get.snackbar(
+        "Logout Failed",
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
