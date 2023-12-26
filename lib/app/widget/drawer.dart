@@ -17,6 +17,7 @@ class AppDrawer extends StatelessWidget {
 
   Future<void> _launchUrl(String url) async {
     final Uri uri = Uri(scheme: "https", host: url);
+    // ignore: deprecated_member_use
     if (!await launch(
       uri.toString(),
       forceSafariVC: false,
@@ -41,27 +42,31 @@ class AppDrawer extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              accountEmail: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                child: Text(
-                  homeController.user.value?.email ?? '',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.tertiary,
-                  ),
-                ),
-              ),
+              accountEmail: authController.user.value?.email != null
+                  ? Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      child: Text(
+                        homeController.user.value?.email ?? '',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                      ),
+                    )
+                  : null,
               currentAccountPicture: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  'https://avatars.githubusercontent.com/u/101344946?v=4',
-                  width: 52.0,
-                  height: 52.0,
-                  fit: BoxFit.cover,
-                ),
+                child: authController.user.value?.photoUrl != null
+                    ? Image.network(
+                        authController.user.value?.photoUrl ?? '',
+                        width: 52.0,
+                        height: 52.0,
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
               margin: EdgeInsets.zero,
               decoration: BoxDecoration(
@@ -167,7 +172,6 @@ class AppDrawer extends StatelessWidget {
                         ? const Icon(FontAwesomeIcons.powerOff)
                         : null,
                     onTap: () async {
-                      print('Tapped on ListTile');
                       if (authController.user.value != null) {
                         await authController
                             .logout(authController.user.value?.name ?? '');

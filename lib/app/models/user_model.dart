@@ -9,6 +9,7 @@ class User {
   String email;
   String npm;
   String phone;
+  String? photoUrl;
 
   User(this.id, this.name, this.email, this.npm, this.phone);
 
