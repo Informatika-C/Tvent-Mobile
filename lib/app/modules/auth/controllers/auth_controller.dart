@@ -155,6 +155,14 @@ class AuthController extends GetxController {
                   ElevatedButton(
                     onPressed: () async {
                       await performLogout();
+                      Get.back();
+                      Get.back();
+                      MainController controller = Get.find<MainController>();
+                      final PageController pageController =
+                          controller.pageController.value;
+                      pageController.jumpToPage(0);
+
+                      Get.toNamed(Routes.AUTH);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0XFFE67E22),
@@ -215,14 +223,6 @@ class AuthController extends GetxController {
 
       await authServices.clearUser();
       await authServices.removeToken();
-
-      Get.back();
-      Get.back();
-      MainController controller = Get.find<MainController>();
-      final PageController pageController = controller.pageController.value;
-      pageController.jumpToPage(0);
-
-      Get.toNamed(Routes.AUTH);
     } catch (error) {
       Get.snackbar(
         "Logout Failed",
