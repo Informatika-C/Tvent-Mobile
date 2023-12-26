@@ -172,11 +172,10 @@ class AppDrawer extends StatelessWidget {
                         await authController
                             .logout(authController.user.value?.name ?? '');
                       } else {
-                        Get.offNamed('/auth');
+                        Get.toNamed('/auth');
                       }
                     },
                   ),
-
                   const Divider(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

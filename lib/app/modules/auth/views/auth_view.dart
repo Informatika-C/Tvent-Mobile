@@ -713,6 +713,7 @@ class AuthView extends GetView<AuthController> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         centerTitle: true,
