@@ -62,6 +62,14 @@ class AuthServices extends GetxService {
     this.lomba.value = lomba;
   }
 
+  Future<void> clearUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove('user');
+
+    user.value = null;
+  }
+
   @override
   void onInit() async {
     super.onInit();

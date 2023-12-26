@@ -18,7 +18,7 @@ void main() async {
     runApp(
       GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "Application",
+        title: "Tvent",
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
         theme: Themes.light,

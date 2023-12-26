@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tvent/app/modules/auth/controllers/auth_controller.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
 import 'package:tvent/app/modules/main/controllers/main_controller.dart';
 import 'dart:ui';
@@ -9,14 +10,19 @@ import '../modules/profile/views/profile_edit_view.dart';
 class CustomPopupMenu extends StatelessWidget {
   final int currentIndex;
   final MainController controller;
+  final AuthController authController;
 
   const CustomPopupMenu(
-      {Key? key, required this.currentIndex, required this.controller})
+      {Key? key,
+      required this.currentIndex,
+      required this.controller,
+      required this.authController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.put(MainController());
+    Get.put(AuthController());
     Get.put(HomeController());
     return PopupMenuButton<String>(
       onSelected: (value) {
@@ -30,7 +36,6 @@ class CustomPopupMenu extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      // color: Theme.of(context).colorScheme.tertiary,
       elevation: 5,
     );
   }
@@ -73,15 +78,19 @@ class CustomPopupMenu extends StatelessWidget {
         ];
       case 3:
         return [
-          const PopupMenuItem<String>(
-            value: 'editProfile',
-            child: Text('Edit Profile'),
-          ),
-          const PopupMenuItem<String>(
-            value: 'logOut',
-            child: Text('LogOut'),
+          if (authController.user.value != null)
+            const PopupMenuItem<String>(
+              value: 'editProfile',
+              child: Text('Edit Profile'),
+            ),
+          PopupMenuItem<String>(
+            value: 'log',
+            child: Text(
+              authController.user.value != null ? 'Logout' : 'Login Require!',
+            ),
           ),
         ];
+
       default:
         return [];
     }
@@ -102,10 +111,14 @@ class CustomPopupMenu extends StatelessWidget {
       case 'editProfile':
         Get.dialog(ProfileEdit());
         break;
-      case 'logOut':
-        controller.logout(
-          controller.user.value?.name ?? '',
-        );
+      case 'log':
+        if (authController.user.value != null) {
+          authController.logout(
+            authController.user.value!.name ?? '',
+          );
+        } else {
+          Get.offNamed('/auth');
+        }
         break;
       default:
         print('Selected menu for Page 4: $value');
