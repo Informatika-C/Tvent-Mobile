@@ -16,17 +16,6 @@ class AppDrawer extends StatelessWidget {
   final HomeController homeController = Get.find<HomeController>();
   final AuthController authController = Get.find<AuthController>();
 
-  Future<void> _launchUrl(String url) async {
-    final Uri uri = Uri(scheme: "https", host: url);
-    // ignore: deprecated_member_use
-    if (!await launch(
-      uri.toString(),
-      forceSafariVC: false,
-    )) {
-      throw Exception('Could not launch url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -121,9 +110,10 @@ class AppDrawer extends StatelessWidget {
                           leading: const Icon(FontAwesomeIcons.github),
                           title: const Text('Github'),
                           onTap: () async {
+                            const url =
+                                'https://github.com/Informatika-C/Tvent-Mobile';
                             try {
-                              await _launchUrl(
-                                  'https://github.com/Informatika-C/Tvent-Mobile');
+                              await launch(url);
                             } catch (e) {
                               print('Error: $e');
                             }
@@ -133,8 +123,10 @@ class AppDrawer extends StatelessWidget {
                           leading: const Icon(FontAwesomeIcons.instagram),
                           title: const Text('Instagram'),
                           onTap: () async {
+                            const url =
+                                'https://www.instagram.com/teknokrat_university/';
                             try {
-                              await _launchUrl('https://www.instagram.com/');
+                              await launch(url);
                             } catch (e) {
                               print('Error: $e');
                             }
@@ -143,11 +135,12 @@ class AppDrawer extends StatelessWidget {
                       ],
                     ),
                     ListTile(
-                      leading: const Icon(FontAwesomeIcons.compass),
+                      leading: const Icon(Icons.link),
                       title: const Text('Tvent'),
                       onTap: () async {
+                        const url = 'https://tvent.azurewebsites.net/';
                         try {
-                          await _launchUrl('https://tvent.azurewebsites.net/');
+                          await launch(url);
                         } catch (e) {
                           print('Error: $e');
                         }

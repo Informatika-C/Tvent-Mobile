@@ -88,9 +88,9 @@ class _EventViewState extends State<EventView>
           ),
           SliverAppBar(
             expandedHeight: _appBarMaxHeight,
-            floating: true,
+            floating: false,
             pinned: true,
-            stretch: false,
+            stretch: true,
             collapsedHeight: 80,
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
@@ -266,15 +266,6 @@ class _EventViewState extends State<EventView>
               ),
             ),
           ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          //   sliver: Obx(
-          //     () => eventController.isLoading.value
-          //         ? SliverToBoxAdapter(child: ShimmerLoadingWidget())
-          //         : SliverList(
-          //             delegate: SliverChildListDelegate([BuildCardByCategory()])),
-          //   ),
-          // ),
         ],
       ),
     );
