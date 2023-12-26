@@ -13,8 +13,7 @@ import '../widgets/build_card_bycategory.dart';
 import '../widgets/sekeleton_card.dart';
 
 class EventView extends StatefulWidget {
-
-  EventView({this.key}) : super(key: key);
+  // EventView({this.key}) : super(key: key);
 
   @override
   _EventViewState createState() => _EventViewState();
@@ -71,8 +70,8 @@ class _EventViewState extends State<EventView>
                       children: List.generate(
                         categoryController.categories.length,
                         (index) => CategoryBar(
-                    index: index,
-                  ),
+                          index: index,
+                        ),
                       ),
                     ),
                   ),
@@ -109,7 +108,7 @@ class _EventViewState extends State<EventView>
                 () => homeModel.value.popularEvents != null
                     ? Carousel(
                         images: homeModel.value.popularEvents!
-                            .map((e) => e.imageUrl!)
+                            .map((e) => e.bannerUrl!)
                             .toList())
                     : ShimmerCarousel(),
               ),
@@ -170,7 +169,7 @@ class _EventViewState extends State<EventView>
                                   ),
                                 ],
                               ),
-                              child: evC.isLoading.value
+                              child: eventController.isLoading.value
                                   ? ShimmerCategoryCard()
                                   : Row(
                                       mainAxisAlignment:
@@ -195,10 +194,10 @@ class _EventViewState extends State<EventView>
                                             alignment:
                                                 WrapAlignment.spaceBetween,
                                             children: List.generate(
-                                              evC.categories.length,
-                                              (index) => CollapsTools(
-                                                  category:
-                                                      evC.categories[index]),
+                                              categoryController
+                                                  .categories.length,
+                                              (index) =>
+                                                  CollapsTools(index: index),
                                             ),
                                           ),
                                         ),
@@ -222,17 +221,17 @@ class _EventViewState extends State<EventView>
                 children: [
                   Obx(
                     () {
-                    CategoryModel currentCategory = categoryController
+                      CategoryModel currentCategory = categoryController
                           .categories[categoryController.choseKategori.value];
 
-                    return Text(
-                      "Best ${currentCategory.name} Event",
+                      return Text(
+                        "Best ${currentCategory.name} Event",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       );
-                  },
+                    },
                   ),
                   InkWell(
                     onTap: () {
@@ -267,9 +266,15 @@ class _EventViewState extends State<EventView>
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 100.0),
-          ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          //   sliver: Obx(
+          //     () => eventController.isLoading.value
+          //         ? SliverToBoxAdapter(child: ShimmerLoadingWidget())
+          //         : SliverList(
+          //             delegate: SliverChildListDelegate([BuildCardByCategory()])),
+          //   ),
+          // ),
         ],
       ),
     );

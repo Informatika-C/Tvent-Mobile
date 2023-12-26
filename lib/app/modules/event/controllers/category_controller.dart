@@ -22,7 +22,7 @@ class CategoryController extends GetxController {
     ),
     CategoryModel(
       name: 'Programming',
-      icon: FontAwesomeIcons.laptopCode,
+      icon: FontAwesomeIcons.bug,
       label: 'Programming',
     ),
     CategoryModel(

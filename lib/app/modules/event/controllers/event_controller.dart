@@ -10,7 +10,7 @@ class EventController extends GetxController {
   final dio = Dio();
   RxBool isLoading = false.obs;
 
-  RxList<DataKategoriEvent> dataKategoriEvents = <DataKategoriEvent>[].obs;
+  // RxList<DataKategoriEvent> dataKategoriEvents = <DataKategoriEvent>[].obs;
   RxList<EventModel> events = <EventModel>[].obs;
 
   String getBannerUrl(int id, String banner) {
