@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/event/widgets/category_bar.dart';
 import 'package:tvent/app/modules/event/widgets/collaps_tools.dart';
@@ -144,15 +142,24 @@ class _EventViewState extends State<EventView>
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.background,
                                 border: Border.all(
-                                  color: Colors.transparent,
-                                  width: 0,
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? const Color.fromARGB(255, 51, 50, 50)
+                                          .withOpacity(1)
+                                      : Colors.transparent,
+                                  width: 1,
                                 ),
                                 borderRadius: const BorderRadius.vertical(
                                     bottom: Radius.circular(17)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color.fromARGB(255, 51, 50, 50)
-                                        .withOpacity(1),
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? const Color.fromARGB(
+                                                255, 165, 163, 163)
+                                            .withOpacity(0.5)
+                                        : const Color.fromARGB(255, 51, 50, 50)
+                                            .withOpacity(1),
                                     offset: const Offset(0, 2),
                                     blurRadius: 4,
                                     spreadRadius: -2,

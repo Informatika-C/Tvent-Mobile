@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Themes {
   static final light = ThemeData(
-    primaryColor: const Color(0XFFE67E22),
+    primaryColor: const Color(0XFF06142E),
     scaffoldBackgroundColor: Colors.transparent,
     fontFamily: 'Montserrat',
     colorScheme: const ColorScheme.light(
@@ -19,7 +19,7 @@ class Themes {
   );
 
   static final dark = ThemeData(
-    primaryColor: const Color(0XFF262A32),
+    primaryColor: const Color(0XFFE1DCD1),
     scaffoldBackgroundColor: Colors.transparent,
     fontFamily: 'Montserrat',
     colorScheme: const ColorScheme.dark(

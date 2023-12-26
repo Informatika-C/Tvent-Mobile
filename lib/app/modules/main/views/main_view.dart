@@ -3,6 +3,7 @@ import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tvent/app/modules/auth/controllers/auth_controller.dart';
 import 'package:tvent/app/widget/drawer.dart';
 import 'package:tvent/app/widget/overlay.dart';
 import '../../../routes/app_nav.dart';
@@ -16,6 +17,7 @@ class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     Get.put(MainController());
+    Get.put(AuthController());
     Get.put(HomeController());
     return Scaffold(
       key: _scaffoldKey,
@@ -44,6 +46,7 @@ class MainView extends GetView<MainController> {
               return CustomPopupMenu(
                 currentIndex: controller.selctedIndex.value,
                 controller: controller,
+                authController: AuthController(),
               );
             },
           ),
