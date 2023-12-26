@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -406,8 +407,8 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         );
                       },
-                      child: Image.network(
-                        lomba?.poster ?? '',
+                      child: Image(
+                        image: CachedNetworkImageProvider(lomba?.poster ?? ''),
                         height: 210,
                         width: 150,
                         fit: BoxFit.cover,

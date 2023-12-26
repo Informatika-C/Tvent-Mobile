@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,8 +62,9 @@ class AppDrawer extends StatelessWidget {
               currentAccountPicture: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: authController.user.value?.photoUrl != null
-                    ? Image.network(
-                        authController.user.value?.photoUrl ?? '',
+                    ? Image(
+                        image: CachedNetworkImageProvider(
+                            authController.user.value?.photoUrl ?? ''),
                         width: 52.0,
                         height: 52.0,
                         fit: BoxFit.cover,

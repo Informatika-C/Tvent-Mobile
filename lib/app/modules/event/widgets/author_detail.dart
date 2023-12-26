@@ -1,5 +1,6 @@
 // CombinedWidget.dart
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/event/controllers/event_detail_controller.dart';
@@ -32,8 +33,9 @@ class AuthorsDetail extends StatelessWidget {
                     width: 40,
                     height: 40,
                   )
-                : Image.network(
-                    eventDetailController.event.value.organizerImg ?? "",
+                : Image(
+                    image: CachedNetworkImageProvider(
+                        eventDetailController.event.value.organizerImg ?? ""),
                     width: 40,
                     height: 40,
                     colorBlendMode: BlendMode.colorBurn,

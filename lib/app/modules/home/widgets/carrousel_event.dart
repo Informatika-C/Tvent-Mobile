@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CarouselImageWidget extends StatelessWidget {
   final HomeController homeController = Get.find();
@@ -36,8 +37,8 @@ class Carousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       items: images.map<Widget>((image) {
-        return Image.network(
-          image,
+        return Image(
+          image: CachedNetworkImageProvider(image),
           fit: BoxFit.cover,
           width: double.infinity,
         );

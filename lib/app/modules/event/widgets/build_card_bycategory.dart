@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tvent/app/modules/event/controllers/event_controller.dart';
 import 'package:tvent/app/modules/event/views/event_details_view.dart';
 import 'package:tvent/app/models/event_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class BuildCardByCategory extends StatelessWidget {
   final EventController eventController = Get.put(EventController());
@@ -61,8 +62,8 @@ class EventCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: event.bannerUrl != null
-                  ? Image.network(
-                      event.bannerUrl ?? "",
+                  ? Image(
+                      image: CachedNetworkImageProvider(event.bannerUrl ?? ""),
                       height: 200,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -95,8 +96,9 @@ class EventCard extends StatelessWidget {
                   Row(
                     children: [
                       event.organizerImg != null
-                          ? Image.network(
-                              event.organizerImg ?? "",
+                          ? Image(
+                              image: CachedNetworkImageProvider(
+                                  event.organizerImg ?? ""),
                               width: 30,
                               height: 30,
                             )

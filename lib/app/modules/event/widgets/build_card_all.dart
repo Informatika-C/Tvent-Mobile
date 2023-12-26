@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../home/models/event_model.dart';
@@ -25,8 +26,9 @@ class EventList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            event.imageUrl ?? 'placeholder_image_url',
+          Image(
+            image: CachedNetworkImageProvider(
+                event.imageUrl ?? 'placeholder_image_url'),
             height: 200.0,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -67,8 +69,9 @@ class EventList extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10.0),
-                Image.network(
-                  event.authorsImg ?? 'placeholder_author_image_url',
+                Image(
+                  image: CachedNetworkImageProvider(
+                      event.authorsImg ?? 'placeholder_author_image_url'),
                   height: 30.0,
                   width: 30.0,
                   fit: BoxFit.cover,

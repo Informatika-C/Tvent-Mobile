@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/event/controllers/event_controller.dart';
@@ -145,10 +146,12 @@ class EventDetailsInfo extends StatelessWidget {
               // Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  eventDetailController.lombas[index].poster != null
+                child: Image(
+                  image: CachedNetworkImageProvider(eventDetailController
+                              .lombas[index].poster !=
+                          null
                       ? eventDetailController.lombas[index].poster ?? ""
-                      : "https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png",
+                      : "https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png"),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
 import 'package:tvent/app/models/event_model.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class EventCarousel extends StatefulWidget {
   @override
@@ -110,8 +111,8 @@ class EventCard extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(17.0)),
               child: event.bannerUrl != null
-                  ? Image.network(
-                      event.bannerUrl ?? '',
+                  ? Image(
+                      image: CachedNetworkImageProvider(event.bannerUrl ?? ''),
                       height: 120.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -150,8 +151,9 @@ class EventCard extends StatelessWidget {
                   Row(
                     children: [
                       event.organizerImg != null
-                          ? Image.network(
-                              event.organizerImg ?? '',
+                          ? Image(
+                              image: CachedNetworkImageProvider(
+                                  event.organizerImg ?? ''),
                               height: 30.0,
                               width: 30.0,
                               fit: BoxFit.fill,
