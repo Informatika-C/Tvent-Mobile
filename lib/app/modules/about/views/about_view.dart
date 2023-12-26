@@ -33,10 +33,9 @@ class AboutView extends GetView<AboutController> {
                 borderRadius: BorderRadius.circular(18.0),
                 color: Colors.grey[300],
               ),
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: VideoPlayerWidget(),
-              ),
+              child: const VideoPlayerWidget(
+                  videoUrl:
+                      'https://tvent.azurewebsites.net/assets/images/lv_0_20231108111358.mp4'),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
