@@ -4,21 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/auth/controllers/auth_controller.dart';
+import 'package:tvent/app/modules/home/controllers/home_controller.dart';
 import 'package:tvent/app/widget/drawer.dart';
 import 'package:tvent/app/widget/overlay.dart';
 import '../../../routes/app_nav.dart';
-import '../../home/controllers/home_controller.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
   MainView({super.key});
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  HomeController homeController = Get.put(HomeController());
+  AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MainController());
-    Get.put(AuthController());
-    Get.put(HomeController());
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -63,7 +62,7 @@ class MainView extends GetView<MainController> {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: createPageView(controller),
-      bottomNavigationBar: createBottombar(controller, context),
+      bottomNavigationBar: createBottombar(controller, authController, context),
       drawerEnableOpenDragGesture: true,
       drawer: AppDrawer(),
       extendBody: true,
@@ -86,7 +85,8 @@ Obx createPageView(MainController controller) {
   );
 }
 
-Obx createBottombar(MainController controller, BuildContext context) {
+Obx createBottombar(MainController controller, AuthController authController,
+    BuildContext context) {
   return Obx(
     () => ClipRRect(
       borderRadius: controller.borderRadius,
@@ -100,7 +100,9 @@ Obx createBottombar(MainController controller, BuildContext context) {
           outlineBorderColor: const Color(0xfff2f2f2),
           currentIndex: controller.selctedIndex.value,
           onTap: controller.onItemTapped,
-          items: NavPages.navBar,
+          items: authController.user.value == null
+              ? NavPages.navBar_guest
+              : NavPages.navBar,
           selectedItemColor: Theme.of(context).colorScheme.secondary,
           unselectedItemColor: Theme.of(context).colorScheme.primary,
         ),

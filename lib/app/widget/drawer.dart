@@ -94,119 +94,125 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  for (int i = 0; i < NavPages.titles.length; i++)
+              child: Obx(() {
+                final tiles = authController.user.value != null
+                    ? NavPages.titles
+                    : NavPages.titles_guest;
+
+                return ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    for (int i = 0; i < tiles.length; i++)
+                      ListTile(
+                        title: Text(tiles[i]),
+                        onTap: () {
+                          controller.pageController.value.jumpToPage(i);
+                          controller.selctedIndex.value = i;
+                          Get.back();
+                        },
+                      ),
+                    ExpansionTile(
+                      childrenPadding: const EdgeInsets.only(left: 25.0),
+                      leading: const Icon(FontAwesomeIcons.codeBranch),
+                      title: const Text('Find Us!'),
+                      children: <Widget>[
+                        ListTile(
+                          leading: const Icon(FontAwesomeIcons.github),
+                          title: const Text('Github'),
+                          onTap: () async {
+                            try {
+                              await _launchUrl(
+                                  'https://github.com/Informatika-C/Tvent-Mobile');
+                            } catch (e) {
+                              print('Error: $e');
+                            }
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(FontAwesomeIcons.instagram),
+                          title: const Text('Instagram'),
+                          onTap: () async {
+                            try {
+                              await _launchUrl('https://www.instagram.com/');
+                            } catch (e) {
+                              print('Error: $e');
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                     ListTile(
-                      title: Text(NavPages.titles[i]),
-                      onTap: () {
-                        controller.pageController.value.jumpToPage(i);
-                        controller.selctedIndex.value = i;
-                        Get.back();
+                      leading: const Icon(FontAwesomeIcons.compass),
+                      title: const Text('Tvent'),
+                      onTap: () async {
+                        try {
+                          await _launchUrl('https://tvent.azurewebsites.net/');
+                        } catch (e) {
+                          print('Error: $e');
+                        }
                       },
                     ),
-                  ExpansionTile(
-                    childrenPadding: const EdgeInsets.only(left: 25.0),
-                    leading: const Icon(FontAwesomeIcons.codeBranch),
-                    title: const Text('Find Us!'),
-                    children: <Widget>[
-                      ListTile(
-                        leading: const Icon(FontAwesomeIcons.github),
-                        title: const Text('Github'),
-                        onTap: () async {
-                          try {
-                            await _launchUrl(
-                                'https://github.com/Informatika-C/Tvent-Mobile');
-                          } catch (e) {
-                            print('Error: $e');
-                          }
+                    ListTile(
+                      title: const Text('Dark Mode'),
+                      leading: ThemeService().isDarkMode
+                          ? const Icon(FontAwesomeIcons.solidMoon)
+                          : const Icon(FontAwesomeIcons.moon),
+                      trailing: CupertinoSwitch(
+                        activeColor: const Color(0XFFFFA500),
+                        trackColor: const Color(0XFF06142E),
+                        value: ThemeService().isDarkMode,
+                        onChanged: (value) {
+                          ThemeService().switchTheme();
                         },
                       ),
-                      ListTile(
-                        leading: const Icon(FontAwesomeIcons.instagram),
-                        title: const Text('Instagram'),
-                        onTap: () async {
-                          try {
-                            await _launchUrl('https://www.instagram.com/');
-                          } catch (e) {
-                            print('Error: $e');
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  ListTile(
-                    leading: const Icon(FontAwesomeIcons.compass),
-                    title: const Text('Tvent'),
-                    onTap: () async {
-                      try {
-                        await _launchUrl('https://tvent.azurewebsites.net/');
-                      } catch (e) {
-                        print('Error: $e');
-                      }
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Dark Mode'),
-                    leading: ThemeService().isDarkMode
-                        ? const Icon(FontAwesomeIcons.solidMoon)
-                        : const Icon(FontAwesomeIcons.moon),
-                    trailing: CupertinoSwitch(
-                      activeColor: const Color(0XFFFFA500),
-                      trackColor: const Color(0XFF06142E),
-                      value: ThemeService().isDarkMode,
-                      onChanged: (value) {
+                      onTap: () {
                         ThemeService().switchTheme();
                       },
                     ),
-                    onTap: () {
-                      ThemeService().switchTheme();
-                    },
-                  ),
-                  ListTile(
-                    title: authController.user.value != null
-                        ? const Text('Logout')
-                        : const Text('Login Require!'),
-                    leading: authController.user.value != null
-                        ? const Icon(FontAwesomeIcons.powerOff)
-                        : null,
-                    onTap: () async {
-                      if (authController.user.value != null) {
-                        await authController
-                            .logout(authController.user.value?.name ?? '');
-                      } else {
-                        Get.toNamed('/auth');
-                      }
-                    },
-                  ),
-                  const Divider(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Image.asset(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? "assets/images/tventLight.png"
-                              : "assets/images/tventDark.png",
-                          width: 120,
-                          height: 120,
+                    ListTile(
+                      title: authController.user.value != null
+                          ? const Text('Logout')
+                          : const Text('Login Require!'),
+                      leading: authController.user.value != null
+                          ? const Icon(FontAwesomeIcons.powerOff)
+                          : null,
+                      onTap: () async {
+                        if (authController.user.value != null) {
+                          await authController
+                              .logout(authController.user.value?.name ?? '');
+                        } else {
+                          Get.toNamed('/auth');
+                        }
+                      },
+                    ),
+                    const Divider(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Image.asset(
+                            Theme.of(context).brightness == Brightness.dark
+                                ? "assets/images/tventLight.png"
+                                : "assets/images/tventDark.png",
+                            width: 120,
+                            height: 120,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "©2023 CONST - All Rights Reserved",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w200,
+                        Text(
+                          "©2023 CONST - All Rights Reserved",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w200,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10.0),
-                    ],
-                  ),
-                ],
-              ),
+                        const SizedBox(height: 10.0),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
           ],
         );

@@ -15,6 +15,12 @@ class NavPages {
     () => ProfileView(),
   ];
 
+  static final route_guest = [
+    () => HomeView(),
+    () => EventView(),
+    () => AboutView(),
+  ];
+
   static final navBar = [
     CrystalNavigationBarItem(
       icon: IconlyBold.home,
@@ -34,10 +40,31 @@ class NavPages {
     ),
   ];
 
+  static final navBar_guest = [
+    CrystalNavigationBarItem(
+      icon: IconlyBold.home,
+      unselectedIcon: IconlyLight.home,
+    ),
+    CrystalNavigationBarItem(
+      icon: IconlyBold.work,
+      unselectedIcon: IconlyLight.work,
+    ),
+    CrystalNavigationBarItem(
+      icon: IconlyBold.paper,
+      unselectedIcon: IconlyLight.paper,
+    ),
+  ];
+
   static final List<String> titles = [
     'Tvent',
     'Event',
     'About',
     'Profile',
+  ];
+
+  static final List<String> titles_guest = [
+    'Tvent',
+    'Event',
+    'About',
   ];
 }
