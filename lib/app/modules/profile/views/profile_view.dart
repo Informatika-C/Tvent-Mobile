@@ -165,6 +165,7 @@ class _ProfileViewState extends State<ProfileView> {
                                               ),
                                       ],
                                     ),
+                          const SizedBox(height: 100),
                         ],
                       ),
                     ),
@@ -501,33 +502,24 @@ class _ProfileViewState extends State<ProfileView> {
       onTap: () {
         Get.to(
           () => FullScreenImage(
-            imageUrls: const [
-              'https://avatars.githubusercontent.com/u/101344946?v=4'
+            imageUrls: [
+              controller.user.value?.photoUrl ?? '',
             ],
             initialIndex: 0,
           ),
         );
       },
-      child: Container(
-        height: 100,
-        width: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: const Color.fromARGB(255, 79, 77, 77).withOpacity(1),
-              offset: const Offset(2.5, 4),
-              blurRadius: 7,
-              spreadRadius: -3,
-            ),
-          ],
-          image: const DecorationImage(
-            image: NetworkImage(
-              'https://avatars.githubusercontent.com/u/101344946?v=4',
-            ),
-            fit: BoxFit.cover,
-          ),
-        ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: controller.user.value?.photoUrl != null
+            ? Image(
+                image: CachedNetworkImageProvider(
+                    controller.user.value?.photoUrl ?? ''),
+                width: 100.0,
+                height: 100.0,
+                fit: BoxFit.cover,
+              )
+            : null,
       ),
     );
   }

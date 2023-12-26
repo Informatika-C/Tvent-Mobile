@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tvent/app/modules/home/controllers/home_controller.dart';
@@ -28,13 +29,15 @@ class TopWidget extends StatelessWidget {
   }
 
   Widget buildAppBar(BuildContext context) {
-    String formattedDate = DateFormat("MMM, d EEEE").format(DateTime.now());
+    String formattedDate =
+        DateFormat("MMM, d EEEE yyyy").format(DateTime.now());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Obx(
               () => Expanded(
@@ -44,7 +47,9 @@ class TopWidget extends StatelessWidget {
                     style: DefaultTextStyle.of(context).style,
                     children: [
                       TextSpan(
-                        text: "Hi! Welcome ",
+                        text: homeController.user.value != null
+                            ? "Hi! Welcome "
+                            : null,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontSize: 16,
@@ -74,15 +79,17 @@ class TopWidget extends StatelessWidget {
             Expanded(
               flex: 0,
               child: Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-                child: const Icon(
-                  Icons.person,
+                child: Icon(
+                  homeController.user.value != null
+                      ? FontAwesomeIcons.userLarge
+                      : FontAwesomeIcons.question,
                   color: Colors.black,
-                  size: 40,
+                  size: 25,
                 ),
               ),
             ),

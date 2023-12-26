@@ -137,7 +137,7 @@ class AppDrawer extends StatelessWidget {
                       ],
                     ),
                     ListTile(
-                      leading: const Icon(Icons.link),
+                      leading: const Icon(FontAwesomeIcons.compass),
                       title: const Text('Tvent'),
                       onTap: () async {
                         const url = 'https://tvent.azurewebsites.net/';
@@ -165,10 +165,20 @@ class AppDrawer extends StatelessWidget {
                         ThemeService().switchTheme();
                       },
                     ),
+                    authController.user.value != null
+                        ? const SizedBox(width: 0, height: 0)
+                        : const Divider(),
                     ListTile(
                       title: authController.user.value != null
                           ? const Text('Logout')
-                          : const Text('Login Require!'),
+                          : const Text(
+                              'Login Require!',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
                       leading: authController.user.value != null
                           ? const Icon(FontAwesomeIcons.powerOff)
                           : null,
