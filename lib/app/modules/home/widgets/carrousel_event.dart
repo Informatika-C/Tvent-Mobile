@@ -19,7 +19,7 @@ class CarouselImageWidget extends StatelessWidget {
         () => homeModel.value.popularEvents != null
             ? Carousel(
                 images: homeModel.value.popularEvents!
-                    .map((e) => e.imageUrl!)
+                    .map((e) => e.bannerUrl!)
                     .toList())
             : ShimmerCarousel(),
       ),

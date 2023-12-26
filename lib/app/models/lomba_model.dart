@@ -3,33 +3,37 @@ import 'package:get/get.dart';
 import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/services/auth_services.dart';
 
-class Lomba {
-  int id;
-  String name;
-  String description;
-  String date;
-  String poster;
-  int price;
-  int kuota;
-  int maxParticipantPerTeam;
+class LombaModel {
+  int? id;
+  String? name;
+  String? description;
+  String? date;
+  DateTime? startDate;
+  String? poster;
+  int? price;
+  int? kuota;
+  int? maxParticipantPerTeam;
   int? currentParticipant;
-  String location;
+  String? location;
 
-  Lomba(
+  LombaModel({
     this.id,
     this.name,
     this.description,
     this.date,
+    this.startDate,
     this.poster,
     this.price,
     this.kuota,
     this.maxParticipantPerTeam,
     this.location,
-  ) {
-    poster = '$HOST_SERVER/storage/lomba/poster/$id/$poster';
+  }) {
+    if (poster != null && id != null) {
+      poster = '$HOST_SERVER/storage/lomba/poster/$id/$poster';
+    }
   }
 
-  Lomba.fromJson(Map<String, dynamic> json)
+  LombaModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         description = json['description'],
