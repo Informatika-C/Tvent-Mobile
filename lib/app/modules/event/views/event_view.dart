@@ -266,6 +266,9 @@ class _EventViewState extends State<EventView>
               ),
             ),
           ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 100.0),
+          ),
         ],
       ),
     );
