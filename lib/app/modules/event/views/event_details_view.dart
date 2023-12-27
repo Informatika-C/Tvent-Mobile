@@ -20,7 +20,14 @@ class Details extends StatelessWidget {
       Get.put(EventDetailController());
 
   Details({super.key, required this.id}) {
-    onInit();
+    try {
+      onInit();
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
+    }
   }
 
   void onInit() async {
@@ -49,8 +56,8 @@ class Details extends StatelessWidget {
 
   Widget _buildEventDetailsInfo() {
     return EventDetailsInfo(
-      showDetailLomba: (BuildContext context) {
-        BottomSheetHelper.showDetailLomba(context);
+      showDetailLomba: (BuildContext context, int id) {
+        BottomSheetHelper.showDetailLomba(context, id);
       },
     );
   }

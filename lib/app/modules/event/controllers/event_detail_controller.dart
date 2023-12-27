@@ -57,6 +57,7 @@ class EventDetailController extends GetxController {
         name: lomba["nama_lomba"],
         description: lomba["deskripsi"],
         startDate: DateTime.parse(lomba["pelaksanaan_lomba"]),
+        location: lomba["ruangan_lomba"],
         poster: lomba["poster"],
         price: lomba["biaya_registrasi"],
         kuota: lomba["kuota_lomba"],
