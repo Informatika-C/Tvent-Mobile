@@ -4,6 +4,7 @@ import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileController extends GetxController {
   AuthServices authServices = Get.find<AuthServices>();
@@ -88,6 +89,9 @@ class ProfileController extends GetxController {
       print(e);
     }
   }
+
+
+  
 
   void updateProfile() async {
     if (userEdit.value.id == -1) {

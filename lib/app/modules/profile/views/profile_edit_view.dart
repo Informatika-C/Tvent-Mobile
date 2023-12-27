@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/modules/profile/controllers/profile_controller.dart';
+import 'package:tvent/app/widget/uploadImage.dart';
 
 class ProfileEdit extends StatelessWidget {
   ProfileEdit({super.key});
@@ -49,12 +50,29 @@ class ProfileEdit extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey,
+                  InkWell(
+                    onTap: () {
+                      Get.to(()=> Example());
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
