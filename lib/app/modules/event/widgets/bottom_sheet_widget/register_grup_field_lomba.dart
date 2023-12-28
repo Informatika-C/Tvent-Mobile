@@ -184,14 +184,20 @@ Widget memberField(int index) {
 
 Future<dynamic> confirmDialog(int id) {
   RxBool isLoading = false.obs;
-  final registerGrupController = Get.find<RegisterGrupController>();
-
+  RegisterGrupController? registerGrupController;
+  LombaController? lombaController;
+  try {
+    registerGrupController = Get.find<RegisterGrupController>();
+    lombaController = Get.find<LombaController>();
+  } catch (e) {
+    return Future(() => null);
+  }
   return Get.dialog(
     AlertDialog(
       title: const Text("Password Confirmation"),
       content: TextFormField(
         onChanged: (value) {
-          registerGrupController.passwordConfirmation.value = value;
+          registerGrupController!.passwordConfirmation.value = value;
         },
         obscureText: true,
         decoration: const InputDecoration(
@@ -202,30 +208,32 @@ Future<dynamic> confirmDialog(int id) {
       actions: [
         Obx(
           () => ElevatedButton(
-            onPressed: isLoading.value == false
-                ? () async {
-                    try {
-                      isLoading.value = true;
-                      String massage =
-                          await registerGrupController.registerGrup(id);
-                      Get.snackbar(
-                        "Success",
-                        massage,
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                      _setToRegistered();
-                      _updateProfile();
-                    } catch (e) {
-                      Get.snackbar(
-                        "Error",
-                        e.toString(),
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                    } finally {
-                      isLoading.value = false;
-                    }
-                  }
-                : null,
+            onPressed: lombaController!.lomba.value.isRegistered == true
+                ? null
+                : isLoading.value == false
+                    ? () async {
+                        try {
+                          isLoading.value = true;
+                          String massage =
+                              await registerGrupController!.registerGrup(id);
+                          Get.snackbar(
+                            "Success",
+                            massage,
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
+                          _setToRegistered();
+                          _updateProfile();
+                        } catch (e) {
+                          Get.snackbar(
+                            "Error",
+                            e.toString(),
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
+                        } finally {
+                          isLoading.value = false;
+                        }
+                      }
+                    : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.yellow[700],
               textStyle: const TextStyle(
