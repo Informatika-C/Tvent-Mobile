@@ -29,8 +29,11 @@ class AlreadyRegisBottomSheet extends StatelessWidget {
                     : () async {
                         try {
                           isLoading.value = true;
-                          await quitLomba(id);
-                          Get.back();
+                          String respone = await quitLomba(id);
+                          Get.snackbar(
+                            "Success",
+                            respone,
+                          );
                           _updateProfie();
                         } catch (e) {
                           Get.snackbar(

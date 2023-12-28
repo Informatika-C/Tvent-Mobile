@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/app/models/lomba_model.dart';
 import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/app/modules/profile/controllers/profile_controller.dart';
 import 'package:tvent/app/widget/full_image.dart';
 import 'package:tvent/services/theme.dart';
 import 'package:intl/intl.dart';
+import 'package:tvent/services/auth_services.dart';
+import 'package:dio/dio.dart' as D;
 
 class ProfileView extends StatefulWidget {
   ProfileView({Key? key}) : super(key: key);
@@ -20,6 +23,9 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   final controller = Get.put(ProfileController());
   bool isCardView = true;
+
+  RxBool isLoading = false.obs;
+
   @override
   void dispose() {
     controller.resetExpansionStates();
@@ -465,16 +471,42 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                             ],
                           ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Themes.light.primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                          Obx(
+                            () => ElevatedButton(
+                              onPressed: isLoading.value
+                                  ? null
+                                  : () async {
+                                      try {
+                                        isLoading.value = true;
+                                        String respone =
+                                            await quitLomba(lomba?.id ?? -1);
+                                        Get.snackbar(
+                                          "Success",
+                                          respone,
+                                        );
+                                        Get.back();
+                                        _updateProfie();
+                                      } catch (e) {
+                                        Get.snackbar(
+                                          "Error",
+                                          e.toString(),
+                                          backgroundColor: Colors.red,
+                                          colorText: Colors.white,
+                                        );
+                                        Get.back();
+                                      } finally {
+                                        isLoading.value = false;
+                                      }
+                                    },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Themes.light.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                elevation: 2.0,
                               ),
-                              elevation: 2.0,
+                              child: const Text('Out'),
                             ),
-                            child: const Text('Out'),
                           ),
                         ],
                       ),
@@ -530,5 +562,43 @@ class _ProfileViewState extends State<ProfileView> {
         ),
       ),
     );
+  }
+}
+
+Future<String> quitLomba(int id) async {
+  D.Dio dio = D.Dio();
+
+  String? token = await Get.find<AuthServices>().getToken();
+
+  if (token == null) {
+    throw Exception('Token is null');
+  }
+
+  dio.options.headers['Authorization'] = 'Bearer $token';
+
+  try {
+    final response = await dio.delete(
+      '$HOST_SERVER/api/lomba/unregister',
+      data: {
+        'lomba_id': id,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return response.data['message'];
+    } else {
+      throw Exception(response.data);
+    }
+  } on D.DioException catch (e) {
+    throw Exception(e.response?.data);
+  }
+}
+
+void _updateProfie() async {
+  try {
+    final profileController = Get.find<ProfileController>();
+    await profileController.getLomba();
+  } catch (e) {
+    return;
   }
 }
