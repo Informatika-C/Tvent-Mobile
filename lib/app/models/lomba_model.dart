@@ -15,6 +15,8 @@ class LombaModel {
   int? maxParticipantPerTeam;
   int? currentParticipant;
   String? location;
+  bool? isRegistered;
+  List<CategoryModel>? categories;
 
   LombaModel({
     this.id,
@@ -27,6 +29,9 @@ class LombaModel {
     this.kuota,
     this.maxParticipantPerTeam,
     this.location,
+    this.categories,
+    this.currentParticipant,
+    this.isRegistered,
   }) {
     if (poster != null && id != null) {
       poster = '$HOST_SERVER/storage/lomba/poster/$id/$poster';
@@ -68,4 +73,14 @@ class LombaModel {
 
     return dio.get('$HOST_SERVER/api/user/list-lomba');
   }
+}
+
+class CategoryModel {
+  int? id;
+  String? name;
+
+  CategoryModel({
+    this.id,
+    this.name,
+  });
 }

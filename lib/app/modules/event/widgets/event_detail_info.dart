@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tvent/app/modules/event/controllers/event_controller.dart';
 import 'package:tvent/app/modules/event/controllers/event_detail_controller.dart';
 import 'package:tvent/app/modules/event/widgets/author_detail.dart';
 import 'package:tvent/app/modules/event/widgets/detai_widget.dart';
@@ -9,7 +8,7 @@ import 'package:shimmer/shimmer.dart';
 
 class EventDetailsInfo extends StatelessWidget {
   final EventDetailController eventDetailController = Get.find();
-  final void Function(BuildContext) showDetailLomba;
+  final void Function(BuildContext, int) showDetailLomba;
 
   EventDetailsInfo({required this.showDetailLomba});
 
@@ -103,14 +102,11 @@ class EventDetailsInfo extends StatelessWidget {
           children: List.generate(
             eventDetailController.lombas.isNotEmpty
                 ? eventDetailController.lombas.length
-                : 5,
+                : 4,
             (index) => InkWell(
               onTap: () {
-                // evC.GetDetailLomba(
-                //         "${evC.DataDetailEvents['lomba'][index]['id']}")
-                //     .then(
-                //   (value) => {evC.clearSet(), showDetailLomba(context)},
-                // );
+                int id = eventDetailController.lombas[index].id ?? -1;
+                showDetailLomba(context, id);
               },
               child: _buildLombaContainer(index, context),
             ),

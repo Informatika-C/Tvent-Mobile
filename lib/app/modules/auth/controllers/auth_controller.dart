@@ -27,11 +27,11 @@ class AuthController extends GetxController {
       final token = response.data['token'];
 
       User user = User(
-        userRes['id'],
-        userRes['name'],
-        userRes['email'],
-        userRes['npm'],
-        userRes['phone'],
+        id: userRes['id'],
+        name: userRes['name'],
+        email: userRes['email'],
+        npm: userRes['npm'],
+        phone: userRes['phone'],
       );
 
       await authServices.setUser(user);

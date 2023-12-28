@@ -9,7 +9,8 @@ class ProfileController extends GetxController {
   AuthServices authServices = Get.find<AuthServices>();
   final user = Get.find<AuthServices>().user;
   final lomba = Get.find<AuthServices>().lomba;
-  final userEdit = User(-1, '', '', '', '').obs;
+  final userEdit =
+      User(id: -1, name: '', npm: '', email: '', phone: '', photoUrl: '').obs;
   final password = ''.obs;
   final passwordConfirmation = ''.obs;
 
@@ -47,11 +48,11 @@ class ProfileController extends GetxController {
   void setUpUserEdit() {
     if (user.value != null) {
       userEdit.value = User(
-        user.value?.id ?? userEdit.value.id,
-        user.value?.name ?? userEdit.value.name,
-        user.value?.email ?? userEdit.value.email,
-        user.value?.npm ?? userEdit.value.npm,
-        user.value?.phone ?? userEdit.value.phone,
+        id: user.value?.id ?? userEdit.value.id,
+        name: user.value?.name ?? userEdit.value.name,
+        email: user.value?.email ?? userEdit.value.email,
+        npm: user.value?.npm ?? userEdit.value.npm,
+        phone: user.value?.phone ?? userEdit.value.phone,
       );
     }
     return;
