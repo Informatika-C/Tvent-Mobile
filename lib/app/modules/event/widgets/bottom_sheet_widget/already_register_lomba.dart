@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' as D;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/constant_variable.dart';
+import 'package:tvent/app/modules/profile/controllers/profile_controller.dart';
 import 'package:tvent/services/auth_services.dart';
 
 class AlreadyRegisBottomSheet extends StatelessWidget {
@@ -30,6 +31,7 @@ class AlreadyRegisBottomSheet extends StatelessWidget {
                           isLoading.value = true;
                           await quitLomba(id);
                           Get.back();
+                          _updateProfie();
                         } catch (e) {
                           Get.snackbar(
                             "Error",
@@ -78,5 +80,14 @@ Future<String> quitLomba(int id) async {
     }
   } on D.DioException catch (e) {
     throw Exception(e.response?.data);
+  }
+}
+
+void _updateProfie() async {
+  try {
+    final profileController = Get.find<ProfileController>();
+    await profileController.getLomba();
+  } catch (e) {
+    return;
   }
 }
