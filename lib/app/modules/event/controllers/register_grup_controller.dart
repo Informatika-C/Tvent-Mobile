@@ -64,6 +64,9 @@ class RegisterGrupController extends GetxController {
         throw Exception(response.data);
       }
     } on D.DioException catch (e) {
+      if (e.response?.statusCode == 422) {
+        throw Exception(e.response?.data['message']);
+      }
       throw Exception(e.response?.data);
     } catch (e) {
       rethrow;

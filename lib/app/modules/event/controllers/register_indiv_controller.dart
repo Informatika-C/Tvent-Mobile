@@ -21,7 +21,7 @@ class RegisterIndivController extends GetxController {
       }
       return sendRequest(id);
     } catch (e) {
-      rethrow;
+      throw Exception(e);
     }
   }
 
@@ -51,10 +51,15 @@ class RegisterIndivController extends GetxController {
         resetData();
         return response.data['message'];
       } else {
-        throw Exception(response.data);
+        throw Exception('Something went wrong');
       }
     } on D.DioException catch (e) {
+      if (e.response?.statusCode == 422) {
+        throw Exception(e.response?.data['message']);
+      }
       throw Exception(e.response?.data);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart' as D;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tvent/app/constant_variable.dart';
+import 'package:tvent/app/models/lomba_model.dart';
+import 'package:tvent/app/modules/event/controllers/lomba_controller.dart';
 import 'package:tvent/app/modules/profile/controllers/profile_controller.dart';
 import 'package:tvent/services/auth_services.dart';
 
@@ -33,7 +35,9 @@ class AlreadyRegisBottomSheet extends StatelessWidget {
                           Get.snackbar(
                             "Success",
                             respone,
+                            snackPosition: SnackPosition.BOTTOM,
                           );
+                          _setToUnregistered();
                           _updateProfie();
                         } catch (e) {
                           Get.snackbar(
@@ -41,8 +45,8 @@ class AlreadyRegisBottomSheet extends StatelessWidget {
                             e.toString(),
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
+                            snackPosition: SnackPosition.BOTTOM,
                           );
-                          Get.back();
                         } finally {
                           isLoading.value = false;
                         }
@@ -82,6 +86,9 @@ Future<String> quitLomba(int id) async {
       throw Exception(response.data);
     }
   } on D.DioException catch (e) {
+    if (e.response?.statusCode == 422) {
+      throw Exception(e.response?.data['message']);
+    }
     throw Exception(e.response?.data);
   }
 }
@@ -90,6 +97,21 @@ void _updateProfie() async {
   try {
     final profileController = Get.find<ProfileController>();
     await profileController.getLomba();
+  } catch (e) {
+    return;
+  }
+}
+
+void _setToUnregistered() {
+  try {
+    final LombaController lombaController = Get.find<LombaController>();
+
+    LombaModel lomba = lombaController.lomba.value;
+    lomba.isRegistered = false;
+
+    lombaController.lomba.update((val) {
+      val = lomba;
+    });
   } catch (e) {
     return;
   }

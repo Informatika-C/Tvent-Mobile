@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tvent/app/models/lomba_model.dart';
 import 'package:tvent/app/models/user_model.dart';
 import 'package:async_searchable_dropdown/async_searchable_dropdown.dart';
+import 'package:tvent/app/modules/event/controllers/lomba_controller.dart';
 import 'package:tvent/app/modules/event/controllers/register_grup_controller.dart';
 import 'package:tvent/app/modules/profile/controllers/profile_controller.dart';
 
@@ -206,30 +208,21 @@ Future<dynamic> confirmDialog(int id) {
                       isLoading.value = true;
                       String massage =
                           await registerGrupController.registerGrup(id);
-                      Get.back();
-                      Get.back();
                       Get.snackbar(
                         "Success",
                         massage,
                         snackPosition: SnackPosition.BOTTOM,
                       );
+                      _setToRegistered();
+                      _updateProfile();
                     } catch (e) {
                       Get.snackbar(
                         "Error",
                         e.toString(),
                         snackPosition: SnackPosition.BOTTOM,
                       );
-                      Get.back();
-                      Get.back();
                     } finally {
                       isLoading.value = false;
-                    }
-
-                    try {
-                      final profileController = Get.find<ProfileController>();
-                      await profileController.getLomba();
-                    } catch (e) {
-                      return;
                     }
                   }
                 : null,
@@ -261,4 +254,28 @@ Future<dynamic> confirmDialog(int id) {
       ],
     ),
   );
+}
+
+void _updateProfile() async {
+  try {
+    final profileController = Get.find<ProfileController>();
+    await profileController.getLomba();
+  } catch (e) {
+    return;
+  }
+}
+
+void _setToRegistered() {
+  try {
+    final LombaController lombaController = Get.find<LombaController>();
+
+    LombaModel lomba = lombaController.lomba.value;
+    lomba.isRegistered = true;
+
+    lombaController.lomba.update((val) {
+      val = lomba;
+    });
+  } catch (e) {
+    return;
+  }
 }
