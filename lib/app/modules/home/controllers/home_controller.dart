@@ -13,6 +13,7 @@ class HomeController extends GetxController {
   RxBool isTitleVisible = true.obs;
   final user = Get.find<AuthServices>().user;
   Rx<HomeModel> homeModel = HomeModel().obs;
+  RxBool isLoading = false.obs;
 
   final List<String> textItems = [
     'Unlock Your Potential!',
@@ -38,6 +39,45 @@ class HomeController extends GetxController {
   void onClose() {
     scrollController.dispose();
     super.onClose();
+  }
+
+  Future<void> globalRefresh() async {
+    try {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        isLoading.value = true;
+      });
+
+      D.Dio dio = D.Dio();
+      final response = await dio.get("$HOST_SERVER/api/home");
+
+      if (response.statusCode == 200) {
+        HomeModel refreshedHomeModel = processResponse(response);
+        print(refreshedHomeModel.nearestEvent?.description);
+
+        homeModel.value = refreshedHomeModel;
+
+        onGlobalRefreshComplete();
+      } else {
+        throw Exception("Failed to refresh data");
+      }
+    } catch (error) {
+      print('Error: $error');
+    } finally {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        isLoading.value = false;
+      });
+    }
+  }
+
+  void onGlobalRefreshComplete() {
+    Get.delete<HomeController>();
+
+    Get.put(HomeController());
+    print(
+        "New events length after refresh: ${homeModel.value.newEvents?.length}");
+    isLoading.value = false;
+    fetchHomeData();
+    return;
   }
 
   void fetchHomeData() async {
@@ -98,5 +138,4 @@ class HomeController extends GetxController {
       isTitleVisible.value = offset < 100.0;
     });
   }
-
 }

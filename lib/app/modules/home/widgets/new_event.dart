@@ -53,10 +53,19 @@ class CardList extends StatelessWidget {
               itemBuilder: (context, index) {
                 if (homeController.homeModel.value.newEvents?.length == null) {
                   return const CardItemShimmer();
+                } else if (homeController.isLoading.value) {
+                  return const CardItemShimmer();
                 } else {
                   return CardItem(index);
                 }
               },
+              // itemBuilder: (context, index) {
+              //   if (homeController.homeModel.value.newEvents?.length == null) {
+              //     return const CardItemShimmer();
+              //   } else {
+              //     return CardItem(index);
+              //   }
+              // },
             ),
           ),
         )

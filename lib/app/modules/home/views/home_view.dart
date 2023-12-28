@@ -7,6 +7,7 @@ import 'package:tvent/app/modules/home/widgets/countdown.dart';
 import 'package:tvent/app/modules/home/widgets/event_carousel.dart';
 import 'package:tvent/app/modules/home/widgets/new_event.dart';
 import 'package:tvent/app/modules/home/widgets/top_widget.dart';
+import 'package:tvent/app/widget/global_refresh.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
@@ -18,9 +19,8 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: GlobalRefreshWidget(
+        child: ListView(
           children: [
             TopWidget(textItems: controller.textItems),
             CardList(),
