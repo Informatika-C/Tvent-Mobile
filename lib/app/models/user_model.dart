@@ -4,14 +4,21 @@ import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/services/auth_services.dart';
 
 class User {
-  int id;
-  String name;
-  String email;
-  String npm;
-  String phone;
+  int? id;
+  String? name;
+  String? email;
+  String? npm;
+  String? phone;
   String? photoUrl;
 
-  User(this.id, this.name, this.email, this.npm, this.phone);
+  User({
+    this.id,
+    this.name,
+    this.email,
+    this.npm,
+    this.phone,
+    this.photoUrl,
+  });
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -60,11 +67,11 @@ class User {
     if (response.statusCode == 200) {
       final userData = response.data['user'];
       final newUser = User(
-        user.id,
-        userData['name'],
-        userData['email'],
-        userData['npm'],
-        userData['phone'],
+        id: user.id,
+        name: userData['name'],
+        email: userData['email'],
+        npm: userData['npm'],
+        phone: userData['phone'],
       );
 
       return newUser;

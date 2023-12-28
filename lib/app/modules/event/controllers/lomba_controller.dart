@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' as D;
 import 'package:get/get.dart';
 import 'package:tvent/app/constant_variable.dart';
 import 'package:tvent/app/models/lomba_model.dart';
+import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/app/modules/event/controllers/event_detail_controller.dart';
 import 'package:tvent/services/auth_services.dart';
 
@@ -12,7 +13,7 @@ class LombaController extends GetxController {
 
   Future<void> getLombaDetail(int id) async {
     getLombaFromLocal(id);
-    // getLombaFromServer(id);
+    getLombaFromServer(id);
   }
 
   void getLombaFromLocal(int id) {
@@ -58,8 +59,6 @@ class LombaController extends GetxController {
     final data = response.data;
     List<dynamic> dataCategories = data['kategori'];
 
-    print(data['anggota_terdaftar']);
-
     final lomba = LombaModel(
       id: data['id'],
       name: data['nama_lomba'],
@@ -71,6 +70,7 @@ class LombaController extends GetxController {
       kuota: data['kuota_lomba'],
       maxParticipantPerTeam: data['max_anggota'],
       currentParticipant: data["anggota_terdaftar"],
+      isRegistered: data['sudah_terdaftar'],
     );
 
     lomba.categories = List<CategoryModel>.from(

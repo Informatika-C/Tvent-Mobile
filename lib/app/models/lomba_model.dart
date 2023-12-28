@@ -15,6 +15,7 @@ class LombaModel {
   int? maxParticipantPerTeam;
   int? currentParticipant;
   String? location;
+  bool? isRegistered;
   List<CategoryModel>? categories;
 
   LombaModel({
@@ -30,6 +31,7 @@ class LombaModel {
     this.location,
     this.categories,
     this.currentParticipant,
+    this.isRegistered,
   }) {
     if (poster != null && id != null) {
       poster = '$HOST_SERVER/storage/lomba/poster/$id/$poster';

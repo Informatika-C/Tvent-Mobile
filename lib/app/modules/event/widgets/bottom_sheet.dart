@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tvent/app/models/user_model.dart';
 import 'package:tvent/app/modules/event/controllers/lomba_controller.dart';
+import 'package:tvent/app/modules/event/controllers/register_grup_controller.dart';
+import 'package:tvent/app/modules/event/controllers/register_indiv_controller.dart';
 import 'package:tvent/app/modules/event/widgets/bottom_sheet_widget/head_info_lomba.dart';
 import 'package:tvent/app/modules/event/widgets/bottom_sheet_widget/guest_field_lomba.dart';
 import 'package:tvent/app/modules/event/widgets/bottom_sheet_widget/register_grup_field_lomba.dart';
 import 'package:tvent/app/modules/event/widgets/bottom_sheet_widget/register_indiv_field_lomba.dart';
+import 'package:tvent/app/modules/event/widgets/bottom_sheet_widget/already_register_lomba.dart';
 import 'package:tvent/services/auth_services.dart';
 
 class BottomSheetHelper {
   static void showDetailLomba(BuildContext context, int id) {
     AuthServices authService = Get.find<AuthServices>();
     LombaController lombaController = Get.put(LombaController());
+
+    RegisterIndivController registerIndivController =
+        Get.put(RegisterIndivController());
+
+    RegisterGrupController registerGrupController =
+        Get.put(RegisterGrupController());
+
     lombaController
         .getLombaDetail(id)
         .onError((error, stackTrace) => onErrorGetLomba);
+
+    registerGrupController.members.value = List.generate(
+        lombaController.lomba.value.maxParticipantPerTeam ?? 0,
+        (index) => User());
 
     showModalBottomSheet(
       context: context,
@@ -47,18 +62,40 @@ class BottomSheetHelper {
                     () => Column(
                       children: [
                         HeadInfoBottomSheet(),
+                        // if user is guest
                         (authService.user.value == null)
                             ? GuestFieldBottomSheet()
-                            : ((lombaController.lomba.value
-                                            .maxParticipantPerTeam ??
-                                        -1) >
-                                    1)
-                                ? RegisterGrupFieldLombaBottomSheet(
-                                    numberOfTeamMembers: lombaController.lomba
-                                            .value.maxParticipantPerTeam ??
-                                        0,
+                            // if user is not guest
+                            : lombaController.lomba.value.isRegistered == null
+                                ? const Padding(
+                                    padding: EdgeInsets.only(top: 20),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
                                   )
-                                : RegisterIndivFieldBottomShield(),
+                                // if user is registered
+                                : lombaController.lomba.value.isRegistered ==
+                                        true
+                                    ? AlreadyRegisBottomSheet(id: id)
+                                    // if user is not registered
+                                    : ((lombaController.lomba.value
+                                                    .maxParticipantPerTeam ??
+                                                -1) >
+                                            1)
+                                        // if lomba is grup
+                                        ? RegisterGrupFieldLombaBottomSheet(
+                                            numberOfTeamMembers: lombaController
+                                                    .lomba
+                                                    .value
+                                                    .maxParticipantPerTeam ??
+                                                0,
+                                            id: id,
+                                            registerGrupController:
+                                                registerGrupController,
+                                          )
+                                        // if lomba is indiv
+                                        : RegisterIndivFieldBottomShield(
+                                            id: id),
                       ],
                     ),
                   ),
@@ -68,7 +105,11 @@ class BottomSheetHelper {
           ),
         );
       },
-    ).whenComplete(lombaController.resetData);
+    ).whenComplete(() {
+      lombaController.resetData();
+      registerGrupController.resetData();
+      registerIndivController.resetData();
+    });
   }
 
   static void onErrorGetLomba(error) {
