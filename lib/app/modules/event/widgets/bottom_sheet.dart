@@ -33,76 +33,79 @@ class BottomSheetHelper {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      enableDrag: true,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(50),
-        ),
-      ),
       builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.8,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 12),
-                alignment: Alignment.center,
-                height: 4,
-                width: MediaQuery.of(context).size.width * 0.2,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(2),
-                ),
+        return DraggableScrollableSheet(
+          expand: false,
+          shouldCloseOnMinExtent: true,
+          initialChildSize: 0.6,
+          minChildSize: 0.2,
+          maxChildSize: 0.8,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(60)),
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Obx(
-                    () => Column(
-                      children: [
-                        HeadInfoBottomSheet(),
-                        // if user is guest
-                        (authService.user.value == null)
-                            ? GuestFieldBottomSheet()
-                            // if user is not guest
-                            : lombaController.lomba.value.isRegistered == null
-                                ? const Padding(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                // if user is registered
-                                : lombaController.lomba.value.isRegistered ==
-                                        true
-                                    ? AlreadyRegisBottomSheet(id: id)
-                                    // if user is not registered
-                                    : ((lombaController.lomba.value
-                                                    .maxParticipantPerTeam ??
-                                                -1) >
-                                            1)
-                                        // if lomba is grup
-                                        ? RegisterGrupFieldLombaBottomSheet(
-                                            numberOfTeamMembers: lombaController
-                                                    .lomba
-                                                    .value
-                                                    .maxParticipantPerTeam ??
-                                                0,
-                                            id: id,
-                                            registerGrupController:
-                                                registerGrupController,
-                                          )
-                                        // if lomba is indiv
-                                        : RegisterIndivFieldBottomShield(
-                                            id: id),
-                      ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 12),
+                    alignment: Alignment.center,
+                    height: 4,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(2),
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Obx(
+                        () => Column(
+                          children: [
+                            HeadInfoBottomSheet(),
+                            (authService.user.value == null)
+                                ? GuestFieldBottomSheet()
+                                : lombaController.lomba.value.isRegistered ==
+                                        null
+                                    ? const Padding(
+                                        padding: EdgeInsets.only(top: 20),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      )
+                                    : lombaController
+                                                .lomba.value.isRegistered ==
+                                            true
+                                        ? AlreadyRegisBottomSheet(id: id)
+                                        : ((lombaController.lomba.value
+                                                        .maxParticipantPerTeam ??
+                                                    -1) >
+                                                1)
+                                            ? RegisterGrupFieldLombaBottomSheet(
+                                                numberOfTeamMembers: lombaController
+                                                        .lomba
+                                                        .value
+                                                        .maxParticipantPerTeam ??
+                                                    0,
+                                                id: id,
+                                                registerGrupController:
+                                                    registerGrupController,
+                                              )
+                                            : RegisterIndivFieldBottomShield(
+                                                id: id),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     ).whenComplete(() {
@@ -110,6 +113,89 @@ class BottomSheetHelper {
       registerGrupController.resetData();
       registerIndivController.resetData();
     });
+
+    // showModalBottomSheet(
+    //   context: context,
+    //   isScrollControlled: true,
+    //   enableDrag: true,
+    //   clipBehavior: Clip.antiAliasWithSaveLayer,
+    //   shape: const RoundedRectangleBorder(
+    //     borderRadius: BorderRadius.vertical(
+    //       top: Radius.circular(50),
+    //     ),
+    //   ),
+    //   builder: (BuildContext context) {
+    //     return SingleChildScrollView(
+    //       child: Container(
+    //         height: MediaQuery.of(context).size.height * 0.6,
+    //         padding: const EdgeInsets.symmetric(horizontal: 12),
+    //         child: Column(
+    //           children: [
+    //             Container(
+    //               margin: const EdgeInsets.symmetric(vertical: 12),
+    //               alignment: Alignment.center,
+    //               height: 4,
+    //               width: MediaQuery.of(context).size.width * 0.2,
+    //               decoration: BoxDecoration(
+    //                 color: Colors.black,
+    //                 borderRadius: BorderRadius.circular(2),
+    //               ),
+    //             ),
+    //             Expanded(
+    //               child: SingleChildScrollView(
+    //                 child: Obx(
+    //                   () => Column(
+    //                     children: [
+    //                       HeadInfoBottomSheet(),
+    //                       // if user is guest
+    //                       (authService.user.value == null)
+    //                           ? GuestFieldBottomSheet()
+    //                           // if user is not guest
+    //                           : lombaController.lomba.value.isRegistered == null
+    //                               ? const Padding(
+    //                                   padding: EdgeInsets.only(top: 20),
+    //                                   child: Center(
+    //                                     child: CircularProgressIndicator(),
+    //                                   ),
+    //                                 )
+    //                               // if user is registered
+    //                               : lombaController.lomba.value.isRegistered ==
+    //                                       true
+    //                                   ? AlreadyRegisBottomSheet(id: id)
+    //                                   // if user is not registered
+    //                                   : ((lombaController.lomba.value
+    //                                                   .maxParticipantPerTeam ??
+    //                                               -1) >
+    //                                           1)
+    //                                       // if lomba is grup
+    //                                       ? RegisterGrupFieldLombaBottomSheet(
+    //                                           numberOfTeamMembers: lombaController
+    //                                                   .lomba
+    //                                                   .value
+    //                                                   .maxParticipantPerTeam ??
+    //                                               0,
+    //                                           id: id,
+    //                                           registerGrupController:
+    //                                               registerGrupController,
+    //                                         )
+    //                                       // if lomba is indiv
+    //                                       : RegisterIndivFieldBottomShield(
+    //                                           id: id),
+    //                     ],
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // ).whenComplete(() {
+    //   lombaController.resetData();
+    //   registerGrupController.resetData();
+    //   registerIndivController.resetData();
+    // });
   }
 
   static void onErrorGetLomba(error) {

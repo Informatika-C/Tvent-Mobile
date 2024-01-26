@@ -13,14 +13,14 @@ class HeadInfoBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(height: 20),
           Text(
             lomba.value.name ?? "",
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -64,13 +64,13 @@ class HeadInfoBottomSheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.5,
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "\t Room \t ${lomba.value.location ?? ''}",
+                      overflow: TextOverflow.clip,
                     ),
                     Text(
                         "\t Group \t Max ${lomba.value.maxParticipantPerTeam}"),
@@ -83,6 +83,14 @@ class HeadInfoBottomSheet extends StatelessWidget {
               )
             ],
           ),
+          const SizedBox(height: 16),
+          Text(
+            lomba.value.description ?? "",
+            textAlign: TextAlign.justify,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          )
         ],
       ),
     );
